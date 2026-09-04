@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>启明升学-城市产业导航</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
+<style>
+  :root{
+    --blue-900:#102A43; --blue-800:#16324F; --blue-700:#1E4E8C; --blue-500:#2B6CB0; --blue-300:#9FB6D4;
+    --brown:#EA7A18; --brown-2:#C55F0E; --brown-l:#FBE3C8;
+    --orange:#EA7A18; --orange-l:#F7B267;
+    --teal:#0E9F6E;
+    --bg:#F4F5F8; --card:#FFFFFF; --ink:#1F2A37; --muted:#5C6B7A; --line:#E4EAF1;
+    --c-clusters:#2B6CB0; --c-soe:#EA7A18; --c-emerging:#0E9F6E;
+    --serif:'Noto Serif SC','Songti SC','SimSun',serif;
+    --sans:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+
+  /* ===== 顶栏 ===== */
+  .topbar{flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 22px;
+    background:linear-gradient(115deg,#0F2A48 0%,#1E4E8C 50%,#2B6CB0 74%,#EA7A18 122%);color:#fff;
+    box-shadow:0 2px 14px rgba(16,42,67,.20);position:relative;z-index:40;}
+  .brand{display:flex;align-items:center;gap:13px;min-width:0;}
+  .logo{width:46px;height:46px;flex:none;border-radius:13px;background:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.10));
+    display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.30);box-shadow:0 1px 6px rgba(8,24,46,.22);}
+  .brand-text{min-width:0;}
+  .brand h1{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:1px;margin:0;white-space:nowrap;}
+  .brand .sub{font-size:12px;opacity:.85;margin-top:3px;letter-spacing:.6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .topbar-actions{display:flex;align-items:center;gap:10px;flex:none;}
+  .search-wrap{position:relative;}
+  .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.75);pointer-events:none;}
+  #searchInput{width:252px;padding:9px 14px 9px 38px;border-radius:9px;border:1px solid rgba(255,255,255,.28);
+    background:rgba(255,255,255,.13);color:#fff;font-size:14px;font-family:var(--sans);transition:.15s;}
+  #searchInput::placeholder{color:rgba(255,255,255,.62);}
+  #searchInput:focus{outline:none;border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.2);}
+  #searchDropdown{position:absolute;top:calc(100% + 7px);left:0;right:0;background:#fff;border-radius:11px;
+    box-shadow:0 16px 40px rgba(16,42,67,.28);z-index:80;overflow:hidden;max-height:340px;overflow-y:auto;}
+  .sd-item{padding:10px 15px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:var(--ink);border-bottom:1px solid #F0F3F7;}
+  .sd-item:last-child{border-bottom:none;}
+  .sd-item:hover,.sd-item.hl{background:#EFF4FA;}
+  .sd-item b{font-weight:600;}
+  .sd-item span{color:var(--muted);font-size:12px;}
+  .sd-empty{padding:14px;font-size:13px;color:var(--muted);}
+  #resetBtn{display:flex;align-items:center;gap:6px;padding:9px 15px;border-radius:9px;border:1px solid rgba(255,255,255,.42);
+    background:rgba(255,255,255,.08);color:#fff;font-size:13.5px;cursor:pointer;font-family:var(--sans);transition:.15s;white-space:nowrap;}
+  #resetBtn:hover{background:rgba(255,255,255,.18);}
+
+  /* ===== 省份快捷条 ===== */
+  .prov-strip{flex:none;display:flex;flex-wrap:wrap;gap:6px;padding:9px 22px;background:#fff;border-bottom:1px solid var(--line);}
+  .chip-prov{padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:#F7F9FC;color:#33475C;
+    font-size:12.5px;cursor:pointer;font-family:var(--sans);transition:.15s;}
+  .chip-prov:hover{border-color:var(--brown);color:var(--brown-2);background:#FBF3EA;}
+  .chip-prov.active{background:var(--blue-700);color:#fff;border-color:var(--blue-700);}
+
+  /* ===== 主区域 ===== */
+  main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 430px;grid-template-rows:minmax(0,1fr);}
+  .map-pane{position:relative;min-width:0;min-height:0;background:#ECF1F7;}
+  #map{position:absolute;inset:0;}
+  .map-legend{position:absolute;left:14px;top:12px;z-index:12;background:rgba(255,255,255,.95);border-radius:10px;
+    padding:9px 13px;box-shadow:0 2px 10px rgba(16,42,67,.10);display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;
+    font-size:12px;color:#33475C;max-width:190px;}
+  .map-legend .lg-title{grid-column:1 / -1;font-weight:700;color:var(--blue-800);font-size:12.5px;margin-bottom:2px;letter-spacing:1px;}
+  .map-legend .lg-item{display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .map-legend i{width:11px;height:11px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.08);}
+  .map-hint{position:absolute;left:14px;bottom:12px;z-index:12;font-size:12px;color:#5C6B7A;background:rgba(255,255,255,.92);
+    padding:6px 12px;border-radius:8px;box-shadow:0 2px 10px rgba(16,42,67,.10);letter-spacing:.3px;}
+  #cityLabels{position:absolute;inset:0;pointer-events:none;z-index:15;overflow:hidden;}
+  .city-label{position:absolute;transform:translate(-50%,-150%);pointer-events:none;z-index:15;
+    background:#F1F3F6;border:1px solid #C9D2DD;color:#25405C;font-size:12px;font-weight:600;
+    padding:1px 8px;border-radius:999px;cursor:pointer;font-family:var(--sans);white-space:nowrap;
+    box-shadow:0 1px 4px rgba(16,42,67,.14);transition:.15s;}
+  .city-label.hov{background:#EAF2FB;border-color:var(--brown);color:var(--brown-2);box-shadow:0 2px 8px rgba(16,42,67,.22);}
+  .city-label .cl-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#D6453D;margin-right:5px;vertical-align:1px;}
+  .map-total{position:absolute;right:14px;top:12px;z-index:12;font-size:12px;color:#33475C;background:rgba(255,255,255,.93);
+    padding:7px 13px;border-radius:9px;box-shadow:0 2px 10px rgba(16,42,67,.10);line-height:1.5;}
+  .map-total b{color:var(--blue-700);}
+  .map-zoomhint{position:absolute;right:14px;bottom:12px;z-index:12;font-size:11.5px;color:#8A98A8;background:rgba(255,255,255,.85);
+    padding:5px 10px;border-radius:8px;}
+  .locate-btn{position:absolute;right:14px;top:12px;z-index:12;display:flex;align-items:center;gap:6px;
+    padding:7px 14px;border-radius:9px;border:1px solid #2B6CB0;background:#fff;color:#1E4E8C;
+    font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);
+    box-shadow:0 2px 10px rgba(16,42,67,.14);transition:.15s;}
+  .locate-btn:hover{background:var(--brown);border-color:var(--brown);color:#fff;}
+  .locate-btn:active{transform:translateY(1px);}
+
+  /* ===== 右侧面板 ===== */
+  .panel{background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;min-width:0;min-height:0;position:relative;z-index:20;overflow:hidden;}
+  .panel-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;color:var(--muted);
+    text-align:center;padding:18px 24px;}
+  .panel-empty[hidden]{display:none;}
+  .panel-empty h3{font-family:var(--serif);color:var(--blue-800);font-size:15px;margin:8px 0 4px;}
+  .panel-empty p{font-size:12px;line-height:1.6;max-width:320px;margin:0;}
+  .panel-empty .steps{font-size:11.5px;color:var(--muted);margin-top:9px;text-align:left;line-height:1.9;}
+  .panel-empty .steps b{color:var(--blue-700);}
+
+  .panel-body{display:flex;flex-direction:column;min-height:0;flex:1;}
+  .panel-body[hidden]{display:none;}
+  .prov-banner{display:flex;align-items:center;gap:10px;padding:8px 18px;border-bottom:1px solid var(--line);background:#F5F9FE;flex:none;}
+  .prov-banner[hidden]{display:none;}
+  .prov-banner-chip{font-size:12px;color:var(--blue-800);background:linear-gradient(180deg,#EDF4FC,#E2ECF8);border:1px solid #C3D6EC;border-radius:999px;padding:3px 12px;font-weight:600;letter-spacing:1px;white-space:nowrap;}
+  .prov-banner-note{font-size:11px;color:var(--muted);}
+  .pcard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff;transition:.15s;}
+  .pcard:hover{border-color:var(--blue-300);box-shadow:0 4px 16px rgba(16,42,67,.08);}
+  .pcard .pc-top{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+  .pcard .pc-title{font-size:14px;font-weight:600;color:var(--ink);}
+  .pcard .pc-body{font-size:12.8px;color:#33475C;line-height:1.7;white-space:pre-line;}
+  .panel-head{padding:10px 18px 8px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);}
+  .city-prov{font-size:11.5px;color:var(--muted);letter-spacing:1.5px;}
+  .city-name{font-family:var(--serif);font-weight:900;font-size:24px;color:var(--blue-800);margin:3px 0 0;line-height:1.1;}
+  .icon-btn{border:1px solid var(--line);background:#F4F7FB;width:28px;height:28px;border-radius:8px;font-size:15px;line-height:1;
+    color:var(--muted);cursor:pointer;flex:none;transition:.15s;}
+  .icon-btn:hover{color:var(--blue-700);border-color:var(--blue-300);}
+  .city-stats[hidden], .tabs[hidden], .list-toolbar[hidden]{display:none;}
+  .city-stats{display:flex;gap:8px;padding:8px 18px;border-bottom:1px solid var(--line);}
+  .stat{flex:1;background:#F7F9FC;border:1px solid var(--line);border-radius:9px;padding:5px 8px;text-align:center;}
+  .stat b{display:block;font-size:17px;font-weight:700;color:var(--c);line-height:1.2;}
+  .stat span{font-size:10.5px;color:var(--muted);letter-spacing:.3px;}
+  .tabs{display:flex;gap:8px;padding:8px 18px;border-bottom:1px solid var(--line);}
+  .tab{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 4px;border-radius:9px;
+    border:1px solid var(--line);background:#fff;font-size:13px;color:#33475C;cursor:pointer;font-family:var(--sans);transition:.15s;}
+  .tab .tab-dot{width:8px;height:8px;border-radius:50%;background:var(--c);opacity:.4;flex:none;}
+  .tab .tab-count{font-size:11px;color:var(--muted);background:#EEF2F7;border-radius:999px;padding:0 7px;line-height:16px;flex:none;}
+  .tab:hover{border-color:var(--c);}
+  .tab.active{color:var(--c);font-weight:600;background:linear-gradient(180deg,#FFFFFF 0%,#F5F9FE 100%);box-shadow:0 1px 4px rgba(16,42,67,.07);}
+  .tab.active .tab-dot{opacity:1;}
+  .list-toolbar{display:flex;align-items:center;gap:8px;padding:7px 18px 6px;}
+  #listFilter{flex:1;padding:7px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:var(--sans);
+    background:#FBFCFE;color:var(--ink);}
+  #listFilter:focus{outline:2px solid #D6E3F3;border-color:var(--blue-300);}
+  #listCount{font-size:12px;color:var(--muted);white-space:nowrap;}
+
+  .list{flex:1;min-height:0;overflow-y:auto;padding:4px 20px 16px;scrollbar-width:thin;scrollbar-color:#9FB2C9 transparent;}
+  .list::-webkit-scrollbar{width:10px;}
+  .list::-webkit-scrollbar-track{background:#F1F5FA;}
+  .list::-webkit-scrollbar-thumb{background:#9FB2C9;border-radius:6px;border:2px solid #F1F5FA;}
+  .list::-webkit-scrollbar-thumb:hover{background:#7E94B0;}
+
+  .card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff;transition:.15s;}
+  .card:hover{border-color:#C3D2E6;box-shadow:0 4px 14px rgba(16,42,67,.06);}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px;}
+  .card-title{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45;}
+  .chip{flex:none;font-size:11px;border-radius:6px;padding:2px 8px;white-space:nowrap;line-height:1.5;font-weight:500;}
+  .card-line{font-size:13px;color:#33475C;line-height:1.6;margin:4px 0;}
+  .card-line b{color:var(--blue-800);font-weight:600;margin-right:6px;}
+  .card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+  .card-tags span{font-size:11.5px;color:var(--muted);background:#F1F4F8;border-radius:6px;padding:2px 8px;}
+  .card-tags .ind-chip{color:var(--brown-2);background:#FDF1E4;border:1px solid #F2C48F;font-weight:500;}
+  .grad-btn{display:block;width:100%;margin-top:7px;padding:6px 8px;border-radius:8px;border:1px solid #B9D0EA;
+    background:#EFF5FC;color:#1E4E8C;font-size:12.5px;cursor:pointer;font-family:var(--sans);transition:.15s;text-align:center;}
+  .grad-btn:hover{background:#DFEAF7;border-color:var(--blue-500);}
+  .grad-btn .caret{font-size:10px;margin-left:4px;display:inline-block;transition:transform .18s;}
+  .grad-btn.open .caret{transform:rotate(180deg);}
+  .grad-panel{margin-top:7px;border:1px solid #DDE6F1;border-radius:9px;background:#FBFCFE;overflow:hidden;}
+  .grad-tabs{display:flex;border-bottom:1px solid #E4EAF2;background:#F3F6FA;}
+  .grad-tabs .gtab{flex:1;padding:6px 0;font-size:12.5px;border:none;background:transparent;color:#55708C;cursor:pointer;font-family:var(--sans);border-bottom:2px solid transparent;}
+  .grad-tabs .gtab.active{color:#1E4E8C;font-weight:600;border-bottom-color:#2B6CB0;background:#fff;}
+  .grad-body{padding:8px 10px;max-height:300px;overflow-y:auto;}
+  .grad-cat{margin-bottom:8px;}
+  .grad-cat-name{display:inline-block;font-size:12px;font-weight:600;color:#16324F;background:#E8EFF7;border-radius:6px;padding:2px 8px;}
+  .grad-cat-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;}
+  .grad-chip{position:relative;font-size:12px;color:#25405C;background:#fff;border:1px solid #D3DEEA;border-radius:6px;padding:2px 7px;line-height:1.5;}
+  .grad-chip .bd{position:absolute;top:-7px;right:-6px;background:#D6453D;color:#fff;font-size:9px;font-style:normal;border-radius:4px;padding:0 3px;line-height:13px;font-weight:600;}
+  .grad-empty{font-size:12px;color:#9AA9BA;padding:6px 2px;}
+  .adv-level{margin-bottom:9px;border:1px solid #E3EAF2;border-radius:8px;padding:7px 9px;background:#FAFCFE;}
+  .adv-level-name{display:block;font-size:12px;font-weight:600;color:#1E4E8C;background:#EAF1F9;border-radius:6px;padding:2px 8px;margin-bottom:6px;}
+  .adv-empty{font-size:12px;color:#9AA9BA;padding:6px 2px;}
+
+  .card-field{font-size:12.5px;color:#45586C;line-height:1.55;margin-top:7px;background:#F8FAFC;border-radius:8px;padding:6px 9px;}
+  .card-field b{color:var(--blue-800);font-weight:600;margin-right:6px;}
+  details.more{margin-top:6px;}
+  details.more summary{font-size:12px;color:var(--blue-500);cursor:pointer;user-select:none;}
+  details.more div{font-size:12.5px;color:#45586C;line-height:1.55;margin-top:5px;padding:6px 9px;background:#FAFBFD;border-radius:8px;}
+  details.more div b{margin-right:6px;color:var(--blue-800);font-weight:600;}
+
+  .reps-btn{display:block;width:100%;margin-top:7px;padding:6px 8px;border-radius:8px;border:1px solid #B9D0EA;
+    background:#EFF5FC;color:#1E4E8C;font-size:12.5px;cursor:pointer;font-family:var(--sans);transition:.15s;text-align:center;}
+  .reps-btn:hover{background:#DFEAF7;border-color:var(--blue-500);}
+  .reps-btn .reps-n{display:inline-block;background:#2B6CB0;color:#fff;border-radius:999px;padding:0 7px;line-height:16px;font-size:11px;margin-left:5px;font-weight:600;}
+  .reps-btn .caret{font-size:10px;margin-left:4px;display:inline-block;transition:transform .18s;}
+  .reps-btn.open .caret{transform:rotate(180deg);}
+  .reps-list{margin-top:7px;border:1px solid #DDE6F1;border-radius:9px;background:#FAFBFD;overflow:hidden;}
+  .reps-list[hidden]{display:none;}
+  .reps-item{padding:7px 10px;border-bottom:1px solid #EDF1F6;}
+  .reps-item:last-child{border-bottom:none;}
+  .reps-item .r-n{font-size:12.5px;font-weight:600;color:#16324F;line-height:1.4;}
+  .reps-item .r-t{display:inline-block;font-size:10.5px;color:var(--blue-700);background:#E7F0FA;border-radius:4px;padding:0 5px;margin-left:5px;line-height:16px;vertical-align:1px;white-space:nowrap;}
+  .reps-item .r-p{font-size:11.5px;color:#5C6B7A;line-height:1.5;margin-top:3px;}
+  .reps-none{font-size:12px;color:var(--muted);padding:8px;text-align:center;margin-top:6px;}
+
+  .list-empty{text-align:center;color:var(--muted);padding:42px 14px;font-size:13px;line-height:1.7;}
+  .list-empty svg{display:block;margin:0 auto 12px;color:#C3CFDD;}
+  .load-more{display:block;width:calc(100% - 40px);margin:0 20px 18px;padding:10px;border:1px dashed #C3CFDD;border-radius:9px;
+    background:#FBFCFE;color:var(--blue-700);font-size:13px;cursor:pointer;font-family:var(--sans);transition:.15s;}
+  .load-more:hover{background:#EFF4FA;border-color:var(--blue-300);}
+
+  footer{flex:none;padding:8px 22px;background:#fff;border-top:1px solid var(--line);font-size:11.5px;color:#8A98A8;line-height:1.6;}
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 1000px){
+    body{height:auto;overflow:auto;}
+    main{grid-template-columns:1fr;height:auto;}
+    .map-pane{height:480px;}
+    .panel{border-left:none;border-top:1px solid var(--line);}
+    .list{height:58vh;min-height:300px;max-height:620px;}
+    .topbar{flex-wrap:wrap;}
+    #searchInput{width:200px;}
+  }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M16.2 7.8l-2.3 6L8 16.2l2.3-6z"/>
+          <path d="M12 12l1 2.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>启明升学-城市产业导航</h1>
+        <div class="sub">全景规划：城市-产业-企业-大学-专业</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input id="searchInput" type="text" placeholder="搜索城市，如：大同 / 苏州 / 北京" autocomplete="off">
+        <div id="searchDropdown" hidden></div>
+      </div>
+      <button id="resetBtn" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg>
+        返回全国
+      </button>
+    </div>
+  </header>
+
+  <nav class="prov-strip" id="provStrip" aria-label="省份快捷导航"></nav>
+
+  <main>
+    <section class="map-pane">
+      <div id="map"></div>
+      <div class="map-legend" id="mapLegend"></div>
+      <button id="locateBtn" class="locate-btn" type="button" title="回到初始页面">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.64-6.36"/><path d="M3 4v5h5"/></svg>
+        复位
+      </button>
+      <div class="map-hint" id="mapHint">点击省份，查看该省地级市分布</div>
+      <div class="map-zoomhint">滚轮缩放 · 拖动平移</div>
+    </section>
+
+    <aside class="panel" id="panel">
+      <div id="panelEmpty" class="panel-empty">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+          <path d="M12 21s-6.6-5.3-6.6-10.3A6.6 6.6 0 0 1 12 4.1a6.6 6.6 0 0 1 6.6 6.6C18.6 15.7 12 21 12 21z"/>
+          <circle cx="12" cy="10.7" r="2.4"/>
+        </svg>
+        <h3>点击城市，查看产业名片</h3>
+        <p>聚合国家级产业集群 · 优质央国企 · 新兴产业名企三类信息</p>
+        <div class="steps">
+          <b>①</b> 点击省份放大 → <b>②</b> 点击城市名 → <b>③</b> 查看三类内容
+        </div>
+      </div>
+      <div id="panelBody" class="panel-body" hidden>
+        <div class="panel-head">
+          <div>
+            <div class="city-prov" id="cityProv"></div>
+            <h2 class="city-name" id="cityName"></h2>
+          </div>
+          <button id="panelClose" class="icon-btn" type="button" title="关闭">&times;</button>
+        </div>
+        <div class="prov-banner" id="provBanner" hidden>
+          <span class="prov-banner-chip" id="provBannerChip">全省产业概览</span>
+          <span class="prov-banner-note">来源：全国各省份产业布局与市场规模总表</span>
+        </div>
+        <div class="city-stats" id="cityStats"></div>
+        <div class="tabs" id="tabs"></div>
+        <div class="list-toolbar" id="listToolbar">
+          <input id="listFilter" type="text" placeholder="在结果中筛选关键词（企业/专业/院校）">
+          <span id="listCount"></span>
+        </div>
+        <div class="list" id="list"></div>
+        <button id="loadMore" class="load-more" type="button" hidden>加载更多</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer>数据来源：国家级产业集群查询表（1044 条）· 31省市优质央国企就业指南（657 条）· 新兴产业龙头企业与独角兽企业信息（561 条）· 山西省重点企业分析表（176 条）｜ 仅供高考志愿规划参考，企业信息以官方最新公布为准。</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js" integrity="sha384-pPi0zxBAoDu6+JXW/C68UZLvBUUtU+7zonhif43rqj7pxsGyqyqzcian2Rj37Rss" crossorigin="anonymous"></script>
+  <script>window.CHINA_GEO = __GEOJSON__;</script>
+  <script>window.APP_DATA = __APPDATA__;</script>
+  <script>
+(function(){
+  'use strict';
+  if(!window.echarts){ document.getElementById('map').innerHTML='<p style="padding:30px;color:#8A98A8">图表库加载失败，请检查网络后刷新。</p>'; return; }
+
+  var GEO = window.CHINA_GEO;
+  var DATA = window.APP_DATA;
+  var TABS = [
+    {key:'clusters', label:'国家级产业集群', color:'#2B6CB0'},
+    {key:'soe',      label:'优质央国企',     color:'#EA7A18'},
+    {key:'emerging', label:'新兴产业名企',   color:'#0E9F6E'},
+    {key:'colleges', label:'本科院校',       color:'#7C3AED'}
+  ];
+  var CHIP_BG = {'#2B6CB0':'#EAF2FB', '#EA7A18':'#FDF1E4', '#0E9F6E':'#E5F5EE', '#7C3AED':'#F1EAFB'};
+  /* 城市某类数据条数（colleges 存顶层，其余在 cities[base]） */
+  function cntOf(base, key){
+    if(key === 'colleges'){ var L = DATA.colleges[base]; return L ? L.length : 0; }
+    var c = DATA.cities[base];
+    return c ? (c[key] ? c[key].length : 0) : 0;
+  }
+  function arrOf(base, key){
+    if(key === 'colleges'){ var L = DATA.colleges[base]; return L || []; }
+    var c = DATA.cities[base];
+    return c ? (c[key] || []) : [];
+  }
+
+  /* ---------- 七大区配色（按用户提供分组） ---------- */
+  var REGIONS = [
+    {name:'华北', color:'#B9D4F0', provs:['北京','天津','河北','山西','山东','内蒙古']},
+    {name:'东北', color:'#BEE3CF', provs:['黑龙江','吉林','辽宁']},
+    {name:'华东', color:'#FADDC4', provs:['江苏','浙江','上海','安徽']},
+    {name:'华南', color:'#F4CBDD', provs:['广东','广西','海南','福建']},
+    {name:'华中', color:'#EFE1C2', provs:['河南','湖北','湖南','江西']},
+    {name:'西北', color:'#D5CCEE', provs:['陕西','甘肃','宁夏','青海','新疆']},
+    {name:'西南', color:'#D6E6BE', provs:['云南','贵州','四川','重庆','西藏']}
+  ];
+  var regionProv = {};
+  REGIONS.forEach(function(r){ r.provs.forEach(function(p){ regionProv[p] = r; }); });
+  function provColor(name){
+    var r = regionProv[name];
+    return r ? r.color : '#E7ECF2';
+  }
+
+  /* ---------- 省份名归一化 ---------- */
+  function normProv(s){
+    s = String(s||'').trim();
+    var suffixes = ['维吾尔自治区','壮族自治区','回族自治区','自治区','特别行政区','省','市'];
+    for(var i=0;i<suffixes.length;i++){
+      var suf = suffixes[i];
+      if(s.length >= suf.length && s.substring(s.length - suf.length) === suf){
+        s = s.substring(0, s.length - suf.length);
+        break;
+      }
+    }
+    return s;
+  }
+
+  /* ---------- DOM ---------- */
+  var mapEl = document.getElementById('map');
+  var provStrip = document.getElementById('provStrip');
+  var mapHint = document.getElementById('mapHint');
+  var searchInput = document.getElementById('searchInput');
+  var searchDropdown = document.getElementById('searchDropdown');
+  var resetBtn = document.getElementById('resetBtn');
+  var panelEmpty = document.getElementById('panelEmpty');
+  var panelBody = document.getElementById('panelBody');
+  var cityProv = document.getElementById('cityProv');
+  var cityName = document.getElementById('cityName');
+  var cityStats = document.getElementById('cityStats');
+  var tabsEl = document.getElementById('tabs');
+  var listFilter = document.getElementById('listFilter');
+  var listCount = document.getElementById('listCount');
+  var listEl = document.getElementById('list');
+  var loadMore = document.getElementById('loadMore');
+  var panelClose = document.getElementById('panelClose');
+  var provBanner = document.getElementById('provBanner');
+  var provBannerChip = document.getElementById('provBannerChip');
+  var listToolbar = document.getElementById('listToolbar');
+
+  var state = { province:null, selected:null, activeTab:'clusters', rendered:0, filtered:null, mode:'prov' };
+
+  /* ---------- 地理范围（排除南海诸岛 inset，避免右下方裁切） ---------- */
+  function computeBBox(){
+    var minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9;
+    function walk(c){
+      if(!c) return;
+      if(typeof c[0] === 'number'){
+        if(c[0]<minX)minX=c[0]; if(c[0]>maxX)maxX=c[0];
+        if(c[1]<minY)minY=c[1]; if(c[1]>maxY)maxY=c[1];
+      } else { c.forEach(walk); }
+    }
+    GEO.features.forEach(function(f){
+      if(String(f.properties.adcode).indexOf('100000') !== -1) return;
+      walk(f.geometry && f.geometry.coordinates);
+    });
+    return {minX:minX,minY:minY,maxX:maxX,maxY:maxY};
+  }
+  var BB = computeBBox();
+  var countryView = { center:[(BB.minX+BB.maxX)/2,(BB.minY+BB.maxY)/2], zoom:1 };
+
+  /* ---------- 大区图例 ---------- */
+  document.getElementById('mapLegend').innerHTML =
+    '<div class="lg-title">地理大区</div>' +
+    REGIONS.map(function(r){
+      return '<span class="lg-item"><i style="background:'+r.color+'"></i>'+r.name+'</span>';
+    }).join('');
+
+  /* ---------- 地图：省份大区配色 + 地级市点位 ---------- */
+  var GEO_MAIN = { type:'FeatureCollection', features: GEO.features.filter(function(f){
+    return String(f.properties.adcode).indexOf('100000') === -1;
+  }) };
+  echarts.registerMap('cnmain', GEO_MAIN);
+  var chart = echarts.init(mapEl);
+
+  var cityPoints = Object.keys(DATA.city_meta).map(function(b){
+    var cm = DATA.city_meta[b];
+    var c = DATA.cities[b];
+    var total = c ? (c.clusters.length + c.soe.length + c.emerging.length) : 0;
+    return {
+      name: b,
+      value: cm.center,
+      total: total,
+      itemStyle: { color: total > 0 ? '#D6453D' : '#C9D2DC' }
+    };
+  });
+  function citiesOfProv(prov){
+    return cityPoints.filter(function(p){ return DATA.city_meta[p.name].prov === prov; });
+  }
+
+  /* 省份区域配色数据（geo.regions 逐区域设色） */
+  var regionData = [];
+  /* 河北/天津/香港/澳门 等小区域标签易重叠，单独设置偏移 */
+  var REGION_LABEL_OFFSET = {
+    '河北省':          [-22, 14],
+    '天津市':          [20, 4],
+    '北京市':          [0, -15],
+    '香港特别行政区':  [-16, 2],
+    '澳门特别行政区':  [16, 12],
+    '广东省':          [0, 0]
+  };
+  GEO.features.forEach(function(f){
+    if(String(f.properties.adcode).indexOf('100000') !== -1){ return; }
+    var prov = normProv(f.properties.name);
+    var r = regionProv[prov];
+    var region = { name:f.properties.name, itemStyle:{ areaColor: r ? r.color : '#E7ECF2' } };
+    if(REGION_LABEL_OFFSET[f.properties.name]){
+      region.label = { offset: REGION_LABEL_OFFSET[f.properties.name] };
+    }
+    regionData.push(region);
+  });
+
+  var lastZoom = 1, fitted = false;
+
+  chart.setOption({
+    animation:false,
+    tooltip: {
+      trigger:'item', triggerOn:'click', confine:true, backgroundColor:'rgba(15,42,75,.96)',
+      borderColor:'rgba(15,42,75,.96)', padding:[10,14],
+      textStyle:{color:'#fff', fontSize:13},
+      formatter:function(p){
+        if(p.seriesType === 'scatter'){
+          var base = p.name;
+          var c = DATA.cities[base];
+          var cm = DATA.city_meta[base];
+          return '<b style="font-size:14px">'+esc(base)+'</b>'
+            +'<div style="color:#9FB6D4;margin-top:2px">'+esc(cm?cm.prov:'')+'</div>'
+            +'<div style="margin-top:7px;line-height:1.9">'
+            +'<span style="color:#8fc1ff">● 国家级产业集群 '+(c?c.clusters.length:0)+'</span><br>'
+            +'<span style="color:#ffc07a">● 优质央国企 '+(c?c.soe.length:0)+'</span><br>'
+            +'<span style="color:#7fe0b5">● 新兴产业名企 '+(c?c.emerging.length:0)+'</span><br>'
+            +'<span style="color:#cfa6ff">● 本科院校 '+cntOf(base,'colleges')+'</span></div>';
+        }
+        if(p.componentType === 'geo'){
+          var prov = normProv(p.name);
+          var m = DATA.prov_meta[prov];
+          var cnt = m ? m.cities.length : 0;
+          return '<b>'+esc(p.name)+'</b><div style="color:#9FB6D4;margin-top:3px">'+cnt+' 个地级市 · 点击进入该省</div>';
+        }
+        return '';
+      }
+    },
+    geo:{
+      map:'cnmain', roam:true, zoom:countryView.zoom, center:countryView.center,
+      regions:regionData,
+      label:{show:true, color:'#3A4F66', fontSize:11, fontWeight:400,
+        formatter:function(p){ return normProv(p.name); }},
+      labelLayout:{hideOverlap:true},
+      itemStyle:{ borderColor:'#8FA8C8', borderWidth:0.8 },
+      emphasis:{
+        label:{show:true, color:'#12395E', fontSize:12, fontWeight:600,
+          formatter:function(p){ return normProv(p.name); }},
+        itemStyle:{areaColor:'#F7ECD2', borderColor:'#D9A441', borderWidth:1.1}
+      }
+    },
+    series:[
+      {
+        type:'scatter', coordinateSystem:'geo', zlevel:5, cursor:'pointer',
+        symbol:'circle', symbolSize:6,
+        data:[],
+        label:{show:false, formatter:'{b}', position:'right', fontSize:11, color:'#16324F', fontWeight:500,
+          textBorderColor:'rgba(255,255,255,.9)', textBorderWidth:2},
+        emphasis:{
+          scale:1.8,
+          label:{show:true, formatter:'{b}', position:'right', color:'#16324F', fontSize:12, fontWeight:700,
+            backgroundColor:'rgba(255,255,255,.9)', padding:[1,5], borderRadius:2}
+        }
+      },
+      {
+        type:'effectScatter', coordinateSystem:'geo', zlevel:6,
+        symbol:'circle', symbolSize:14,
+        data:[],
+        rippleEffect:{brushType:'stroke', scale:3, period:8},
+        itemStyle:{color:'#EA7A18'},
+        label:{show:false},
+        tooltip:{show:false},
+        silent:true
+      }
+    ]
+  });
+
+  function fitMap(){
+    var w = mapEl.clientWidth, h = mapEl.clientHeight;
+    if(!w || !h) return false;
+    var p1 = chart.convertToPixel({geoIndex:0}, [BB.minX, BB.maxY]);
+    var p2 = chart.convertToPixel({geoIndex:0}, [BB.maxX, BB.minY]);
+    if(!p1 || !p2) return false;
+    var cw = Math.abs(p2[0]-p1[0]), ch = Math.abs(p2[1]-p1[1]);
+    if(!cw || !ch) return false;
+    /* 按当前缩放比例换算目标缩放，与此刻地图放大状态无关（防止省份放大态被触发时污染全国视图） */
+    var curZoom = chart.getOption().geo[0].zoom || 1;
+    var zoom = curZoom * Math.min(w/cw, h/ch) * 0.96;
+    var center = [(BB.minX+BB.maxX)/2, (BB.minY+BB.maxY)/2];
+    countryView = {center:center, zoom:zoom};
+    chart.setOption({geo:{center:center, zoom:zoom}});
+    lastZoom = zoom;
+    fitted = true;
+    return true;
+  }
+  chart.on('finished', function(){ if(!fitted && !state.province) fitMap(); });
+  /* 首次加载容器可能尚未就绪，重试直至全国视图就位 */
+  (function retryFit(){
+    if(!fitted && !state.province && !fitMap()) setTimeout(retryFit, 120);
+  })();
+  chart.on('georoam', function(params){
+    if(params && params.zoom != null) lastZoom = params.zoom;
+    scheduleLabelUpdate();
+  });
+
+  function setView(center, zoom){
+    chart.setOption({geo:{center:center, zoom:zoom}});
+    lastZoom = zoom;
+  }
+
+  /* ---------- HTML 城市名称标签（可点击） ---------- */
+  var cityLabelWrap = null;
+  /* 城市标签点击命中检测（顶层函数，供地图点击回调与标签委托共用） */
+  var HIT_PAD = 6;
+  function hitLabelAt(x, y){
+    if(!cityLabelWrap) return null;
+    var labels = cityLabelWrap.querySelectorAll('.city-label');
+    for(var i=0;i<labels.length;i++){
+      var r = labels[i].getBoundingClientRect();
+      if(x >= r.left-HIT_PAD && x <= r.right+HIT_PAD && y >= r.top-HIT_PAD && y <= r.bottom+HIT_PAD){
+        return labels[i];
+      }
+    }
+    return null;
+  }
+  function ensureLabelWrap(){
+    if(cityLabelWrap) return cityLabelWrap;
+    cityLabelWrap = document.createElement('div');
+    cityLabelWrap.id = 'cityLabels';
+    mapEl.appendChild(cityLabelWrap);
+    /* 标签层 pointer-events:none 放行地图拖拽，点击/悬停改为坐标命中检测（避免拖拽被标签吃掉） */
+    mapEl.addEventListener('click', function(e){
+      if(!state.province) return;
+      var b = hitLabelAt(e.clientX, e.clientY);
+      if(b) handleCityClick(b.dataset.city);
+    });
+    mapEl.addEventListener('mousemove', function(e){
+      if(!state.province) return;
+      var b = hitLabelAt(e.clientX, e.clientY);
+      var labels = cityLabelWrap.querySelectorAll('.city-label');
+      for(var i=0;i<labels.length;i++){
+        if(labels[i] === b){
+          if(!labels[i].classList.contains('hov')) labels[i].classList.add('hov');
+        }else if(labels[i].classList.contains('hov')){
+          labels[i].classList.remove('hov');
+        }
+      }
+    });
+    /* 拖动地图前先收起 tooltip，避免常驻提示层挡住拖拽 */
+    mapEl.addEventListener('mousedown', function(){
+      chart.dispatchAction({type:'hideTip'});
+    }, true);
+    return cityLabelWrap;
+  }
+  function renderCityLabels(prov){
+    var wrap = ensureLabelWrap();
+    wrap.innerHTML = '';
+    if(!prov || !DATA.prov_meta[prov]) return;
+    var items = [];
+    citiesOfProv(prov).forEach(function(pt){
+      var px = chart.convertToPixel({geoIndex:0}, pt.value);
+      if(!px || !isFinite(px[0]) || !isFinite(px[1])) return;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'city-label';
+      b.innerHTML = '<i class="cl-dot"></i>' + esc(pt.name);
+      b.dataset.city = pt.name;
+      b.style.left = px[0] + 'px';
+      b.style.top = px[1] + 'px';
+      b.style.transform = 'translate(-50%,-50%)';
+      wrap.appendChild(b);
+      items.push({el:b, cx:px[0], cy:px[1], placed:false, rect:null});
+    });
+    // 就近放置 + 碰撞避让：候选位置（上/右/左/下），取第一个不碰撞的
+    var OFF = 17;
+    var CAND = [[0,-OFF],[OFF,0],[-OFF,0],[0,OFF],[0,-OFF-8],[OFF+10,OFF],[0,OFF+10]];
+    items.sort(function(a,b){ return a.cy - b.cy; });
+    items.forEach(function(it){
+      for(var k=0;k<CAND.length;k++){
+        it.el.style.left = (it.cx + CAND[k][0]) + 'px';
+        it.el.style.top = (it.cy + CAND[k][1]) + 'px';
+        var r = it.el.getBoundingClientRect();
+        var ok = true;
+        for(var j=0;j<items.length;j++){
+          var pj = items[j];
+          if(pj === it || !pj.rect) continue;
+          var br = pj.rect;
+          if(!(r.right < br.left - 3 || r.left > br.right + 3 || r.bottom < br.top - 3 || r.top > br.bottom + 3)){
+            ok = false; break;
+          }
+        }
+        if(ok){ it.rect = r; it.placed = true; break; }
+      }
+      if(!it.placed){ it.el.style.left = (it.cx + 0) + 'px'; it.el.style.top = (it.cy - OFF) + 'px'; it.rect = it.el.getBoundingClientRect(); }
+    });
+  }
+  var labelTimer = null;
+  function scheduleLabelUpdate(){
+    if(!state.province) return;
+    clearTimeout(labelTimer);
+    labelTimer = setTimeout(function(){ renderCityLabels(state.province); }, 160);
+  }
+
+  /* ---------- 进入 / 退出省份 ---------- */
+  function enterProvince(prov){
+    var m = DATA.prov_meta[prov];
+    if(!m) return;
+    state.province = prov;
+    setView(m.center, m.zoom);
+    chart.setOption({series:[{data:citiesOfProv(prov), label:{show:false}}, {data:[]}]});
+    renderCityLabels(prov);
+    provStrip.querySelectorAll('.chip-prov').forEach(function(b){
+      b.classList.toggle('active', b.dataset.prov === prov);
+    });
+    mapHint.textContent = '点击城市名称或圆点，查看该城产业详情';
+    openProvPanel(prov);
+  }
+  function exitProvince(){
+    state.province = null;
+    chart.setOption({series:[{data:[], label:{show:false}}, {data:[]}]});
+    setView(countryView.center, countryView.zoom);
+    if(cityLabelWrap) cityLabelWrap.innerHTML = '';
+    provStrip.querySelectorAll('.chip-prov').forEach(function(b){ b.classList.remove('active'); });
+    mapHint.textContent = '点击省份，查看该省地级市分布';
+  }
+
+  /* ---------- 省份产业概览面板 ---------- */
+  var PROV_BLOCKS = [
+    {t:'传统优势产业', c:'#2B6CB0', k:'trad'},
+    {t:'千亿以上产业规模', c:'#EA7A18', k:'scale'},
+    {t:'战略新兴产业（"十五五"）', c:'#0E9F6E', k:'strategic'},
+    {t:'未来产业 / 新赛道', c:'#7C3AED', k:'future'},
+    {t:'产业规模 / 目标信息', c:'#B45309', k:'goal'},
+    {t:'主要规划依据', c:'#64748B', k:'basis'}
+  ];
+  function renderProvCards(prov, pi){
+    var html = '';
+    if(pi){
+      html = PROV_BLOCKS.map(function(b){
+        var v = pi[b.k];
+        if(!v) return '';
+        return '<div class="pcard"><div class="pc-top">'+chipHTML(b.t, b.c)+'</div>'
+          + '<div class="pc-body">'+esc(v)+'</div></div>';
+      }).filter(Boolean).join('');
+    }
+    var m = (DATA.prov_mineral || {})[prov];
+    if(m && (m.mineral || m.mineralNote)){
+      html += '<div class="pcard"><div class="pc-top">'+chipHTML('优势矿产资源', '#A16207')+'</div>'
+        + '<div class="pc-body">'+esc(m.mineral || '暂无')+'</div>'
+        + (m.mineralNote ? '<div class="pc-body" style="margin-top:6px;color:#5C6B7A;font-size:12px">'+esc(m.mineralNote)+'</div>' : '')
+        + '</div>';
+    }
+    if(!html) html = '<div class="list-empty">该省份暂未收录产业布局数据</div>';
+    return html;
+  }
+  function openProvPanel(prov){
+    var pi = (DATA.prov_industry || {})[prov];
+    var hasMineral = !!(DATA.prov_mineral || {})[prov];
+    panelEmpty.hidden = true;
+    panelBody.hidden = false;
+    cityProv.textContent = '全省产业布局总览';
+    cityName.textContent = prov;
+    provBanner.hidden = false;
+    provBannerChip.textContent = prov + ' · 全省产业概览';
+    cityStats.hidden = true;
+    tabsEl.hidden = true;
+    listToolbar.hidden = true;
+    loadMore.hidden = true;
+    listEl.scrollTop = 0;
+    listEl.innerHTML = (pi || hasMineral) ? renderProvCards(prov, pi) : '<div class="list-empty">该省份暂未收录产业布局数据</div>';
+    state.mode = 'prov';
+  }
+  function openCityPanel(base){
+    var c = DATA.cities[base] || {province:'', clusters:[], soe:[], emerging:[]};
+    panelEmpty.hidden = true;
+    panelBody.hidden = false;
+    cityProv.textContent = (c.province ? c.province + ' · ' : '') + '城市产业名片';
+    cityName.textContent = base;
+    provBanner.hidden = true;
+    cityStats.hidden = false;
+    tabsEl.hidden = false;
+    listToolbar.hidden = false;
+    cityStats.innerHTML = TABS.map(function(t){
+      return '<div class="stat" style="--c:'+t.color+'"><b>'+cntOf(base, t.key)+'</b><span>'+t.label+'</span></div>';
+    }).join('');
+    tabsEl.innerHTML = TABS.map(function(t){
+      return '<button type="button" class="tab" data-k="'+t.key+'" style="--c:'+t.color+'">'
+        +'<i class="tab-dot"></i>'+t.label+'<span class="tab-count">'+cntOf(base, t.key)+'</span></button>';
+    }).join('');
+    var first = TABS.find(function(t){ return cntOf(base, t.key) > 0; });
+    state.activeTab = first ? first.key : 'clusters';
+    listFilter.value = '';
+    state.rendered = 0;
+    state.filtered = null;
+    state.mode = 'city';
+    activateTab();
+    renderList();
+  }
+
+  function handleCityClick(base){
+    state.selected = base;
+    var cm = DATA.city_meta[base];
+    if(cm && cm.prov && DATA.prov_meta[cm.prov] && state.province !== cm.prov){
+      enterProvince(cm.prov);
+    }
+    openCityPanel(base);
+    if(cm){
+      chart.setOption({series:[{}, {data:[{name:base, value:cm.center}]}]});
+    }
+  }
+
+  chart.on('click', function(params){
+    if(params.seriesType === 'scatter'){
+      handleCityClick(params.name);
+    } else if(params.componentType === 'geo'){
+      /* 点击落在城市标签上时交给标签点击处理（打开城市），避免误进入省份视图 */
+      var ev = params.event && params.event.event;
+      if(ev && state.province && hitLabelAt(ev.clientX, ev.clientY)) return;
+      var prov = normProv(params.name);
+      if(DATA.prov_meta[prov]) enterProvince(prov);
+    }
+  });
+
+  /* ---------- 省份快捷条 ---------- */
+  provStrip.innerHTML = DATA.prov_order.map(function(p){
+    return '<button type="button" class="chip-prov" data-prov="'+esc(p)+'" style="border-color:'+provColor(p)+'">'+esc(p)+'</button>';
+  }).join('');
+  provStrip.addEventListener('click', function(e){
+    var b = e.target.closest('.chip-prov');
+    if(b) enterProvince(b.dataset.prov);
+  });
+
+  /* ---------- 搜索 ---------- */
+  var cityOptions = Object.keys(DATA.city_meta).map(function(b){
+    return {name:b, prov:DATA.city_meta[b].prov};
+  });
+  function runSearch(){
+    var q = searchInput.value.trim();
+    if(!q){ searchDropdown.hidden = true; return; }
+    /* 兼容带行政后缀的输入：恩施州->恩施、锡林郭勒盟->锡林郭勒、阿克苏地区->阿克苏 */
+    var qk = q.replace(/(自治州|地区|盟)$/,'');
+    var hits = cityOptions.filter(function(o){
+      return o.name.indexOf(q) !== -1 || (qk !== q && o.name.indexOf(qk) !== -1);
+    }).slice(0,12);
+    if(!hits.length){ searchDropdown.innerHTML = '<div class="sd-empty">未找到「'+esc(q)+'」，试试输入地级市名</div>'; searchDropdown.hidden = false; return; }
+    searchDropdown.innerHTML = hits.map(function(o,i){
+      return '<div class="sd-item" data-i="'+i+'" data-name="'+esc(o.name)+'"><b>'+esc(o.name)+'</b><span>'+esc(o.prov)+'</span></div>';
+    }).join('');
+    searchDropdown.hidden = false;
+    searchDropdown._hits = hits;
+  }
+  searchInput.addEventListener('input', runSearch);
+  searchInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      var hits = searchDropdown._hits || [];
+      if(hits.length) goToCity(hits[0].name);
+    } else if(e.key === 'Escape'){
+      searchDropdown.hidden = true;
+    }
+  });
+  searchDropdown.addEventListener('click', function(e){
+    var item = e.target.closest('.sd-item');
+    if(item) goToCity(item.dataset.name);
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.search-wrap')) searchDropdown.hidden = true;
+  });
+  function goToCity(base){
+    var cm = DATA.city_meta[base];
+    if(!cm) return;
+    if(state.province !== cm.prov) enterProvince(cm.prov);
+    handleCityClick(base);
+    searchDropdown.hidden = true;
+    searchInput.blur();
+  }
+
+  /* ---------- 面板 ---------- */
+  panelClose.addEventListener('click', function(){
+    chart.setOption({series:[{}, {data:[]}]});
+    state.selected = null;
+    panelBody.hidden = true;
+    panelEmpty.hidden = false;
+  });
+  /* ---------- 复位：回到初始全国视图 ---------- */
+  function doReset(){
+    exitProvince();
+    chart.setOption({series:[{}, {data:[]}]});
+    state.selected = null;
+    panelBody.hidden = true;
+    panelEmpty.hidden = false;
+  }
+  resetBtn.addEventListener('click', doReset);
+  document.getElementById('locateBtn').addEventListener('click', doReset);
+
+  tabsEl.addEventListener('click', function(e){
+    var b = e.target.closest('.tab');
+    if(!b) return;
+    state.activeTab = b.dataset.k;
+    listFilter.value = '';
+    state.rendered = 0;
+    state.filtered = null;
+    activateTab();
+    renderList();
+  });
+  function activateTab(){
+    tabsEl.querySelectorAll('.tab').forEach(function(b){
+      var on = b.dataset.k === state.activeTab;
+      b.classList.toggle('active', on);
+      if(on){
+        var color = b.style.getPropertyValue('--c').trim();
+        b.style.borderColor = color;
+        b.style.background = CHIP_BG[color] || '#F0F4FA';
+      } else {
+        b.style.borderColor = '';
+        b.style.background = '';
+      }
+    });
+  }
+  listFilter.addEventListener('input', function(){
+    state.rendered = 0;
+    renderList();
+  });
+  loadMore.addEventListener('click', function(){
+    state.rendered = (state.filtered ? state.filtered.length : 0);
+    renderList();
+  });
+  listEl.addEventListener('click', function(e){
+    var gtab = e.target.closest('.gtab');
+    if(gtab){
+      var panel = gtab.closest('.grad-panel');
+      var t = gtab.dataset.t;
+      var tabs = panel.querySelectorAll('.gtab');
+      for(var a=0;a<tabs.length;a++) tabs[a].classList.toggle('active', tabs[a].dataset.t === t);
+      var btn = panel.previousElementSibling;
+      var item = findGradItem(btn.dataset.sch);
+      if(item){
+        panel.querySelector('.grad-body').innerHTML = gradHTML(item.grad, t);
+        panel.dataset.loaded = '1';
+      }
+      return;
+    }
+    var abtn = e.target.closest('.adv-btn');
+    if(abtn){
+      var open = abtn.dataset.advOpen === '1';
+      abtn.dataset.advOpen = open ? '0' : '1';
+      abtn.classList.toggle('open', !open);
+      var panel = abtn.nextElementSibling;
+      if(panel && panel.classList.contains('grad-panel')){
+        panel.hidden = open;
+        if(!open && !panel.dataset.loaded){
+          var item = findGradItem(abtn.dataset.sch);
+          if(item){
+            panel.querySelector('.adv-body').innerHTML = advHTML(item.adv);
+            panel.dataset.loaded = '1';
+          }
+        }
+      }
+      return;
+    }
+    var gbtn = e.target.closest('.grad-btn');
+    if(gbtn){
+      var open = gbtn.dataset.gradOpen === '1';
+      gbtn.dataset.gradOpen = open ? '0' : '1';
+      gbtn.classList.toggle('open', !open);
+      var panel = gbtn.nextElementSibling;
+      if(panel && panel.classList.contains('grad-panel')){
+        panel.hidden = open;
+        if(!open && !panel.dataset.loaded){
+          var item = findGradItem(gbtn.dataset.sch);
+          if(item){
+            panel.querySelector('.grad-body').innerHTML = gradHTML(item.grad, '学术型');
+            panel.dataset.loaded = '1';
+          }
+        }
+      }
+      return;
+    }
+    var btn = e.target.closest('.reps-btn');
+    if(!btn) return;
+    var open = btn.dataset.repsOpen === '1';
+    btn.dataset.repsOpen = open ? '0' : '1';
+    btn.classList.toggle('open', !open);
+    var list = btn.nextElementSibling;
+    if(list && list.classList.contains('reps-list')) list.hidden = open;
+  });
+
+  var PER = 30;
+  function renderList(){
+    var arr = arrOf(state.selected, state.activeTab);
+    var q = listFilter.value.trim();
+    var filtered = arr;
+    if(q) filtered = arr.filter(function(e){ return matchEntry(e, q); });
+    state.filtered = filtered;
+    listCount.textContent = '共 ' + filtered.length + ' 条';
+    var slice = filtered.slice(0, Math.max(state.rendered, PER));
+    listEl.innerHTML = slice.length
+      ? slice.map(function(e){ return renderCard(e, state.activeTab); }).join('')
+      : emptyHTML(state.activeTab, q);
+    loadMore.hidden = !(filtered.length > slice.length);
+    if(filtered.length > slice.length) loadMore.textContent = '加载更多（' + (filtered.length - slice.length) + ' 条）';
+  }
+  function matchEntry(e, q){
+    var s = '';
+    for(var k in e){ if(typeof e[k] === 'string') s += e[k] + ' '; }
+    return s.indexOf(q) !== -1;
+  }
+  function emptyHTML(tabKey, q){
+    var label = (TABS.find(function(t){return t.key===tabKey;}) || {}).label || '该类';
+    return '<div class="list-empty">'
+      + '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>'
+      + (q ? '未找到匹配「'+esc(q)+'」的记录' : '该城市暂无收录「'+label+'」相关数据')
+      + '<br><span style="color:#A6B4C4;font-size:12px">可尝试点击相邻城市，或切换到其他类别</span></div>';
+  }
+
+  /* ---------- 卡片渲染 ---------- */
+  function esc(s){
+    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function chipHTML(text, color){
+    return '<span class="chip" style="color:'+color+';background:'+(CHIP_BG[color]||'#F1F4F8')+';border:1px solid '+color+'">'+esc(text)+'</span>';
+  }
+  function renderCard(e, tabKey){
+    if(tabKey === 'clusters') return cardCluster(e);
+    if(tabKey === 'soe') return cardSoe(e);
+    if(tabKey === 'colleges') return cardCollege(e);
+    return cardEmerging(e);
+  }
+  var COLLEGE_TAG = {'985':'985 高校', '211':'211 高校', '双一流':'双一流', '合作':'中外合作办学', '境外':'境外办学'};
+  function cardCollege(e){
+    var mainTag;
+    if(e.t){ mainTag = COLLEGE_TAG[e.t] || e.t; }
+    else if(e.m){ mainTag = '民办本科'; }
+    else if(/职业大学/.test(e.n)){ mainTag = '职业本科'; }
+    else { mainTag = '本科'; }
+    var tags = [];
+    if(e.m) tags.push('民办');
+    if(e.k && !e.t && e.k !== '民办' && !(e.m && e.k === '民办')) tags.push(e.k);
+    /* 行业背景标签（源于部委直属行业院校，桔色 chip） */
+    var inds = e.ind || [];
+    var grad = '';
+    if(e.grad){
+      grad = '<button type="button" class="grad-btn" data-grad-open="0" data-sch="'+esc(e.n)+'">硕博点<span class="caret">▾</span></button>'
+        + '<div class="grad-panel" hidden>'
+        + '<div class="grad-tabs">'
+        + '<button type="button" class="gtab active" data-t="学术型">学术型</button>'
+        + '<button type="button" class="gtab" data-t="专业学位">专业学位</button>'
+        + '</div><div class="grad-body"></div></div>';
+    }
+    var adv = '';
+    if(e.adv){
+      adv = '<button type="button" class="grad-btn adv-btn" data-adv-open="0" data-sch="'+esc(e.n)+'">优势专业<span class="caret">▾</span></button>'
+        + '<div class="grad-panel" hidden><div class="adv-body"></div></div>';
+    }
+    var prof = '';
+    if(e.prof){
+      prof = '<button type="button" class="reps-btn" data-prof-open="0">专业概况<span class="caret">▾</span></button>'
+        + '<div class="reps-list" hidden><div class="reps-item"><div class="r-p">'+esc(e.prof)+'</div>'
+        + (e.note ? '<div class="r-p" style="margin-top:5px;color:#8A98A8">备注：'+esc(e.note)+'</div>' : '')
+        + '</div></div>';
+    }
+    return '<div class="card"><div class="card-top"><div class="card-title">'+esc(e.n)+'</div>'
+      + chipHTML(mainTag, '#7C3AED') + '</div>'
+      + (inds.length ? '<div class="card-tags">'+inds.map(function(i){return '<span class="ind-chip">'+esc(i)+'</span>';}).join('')+'</div>' : '')
+      + (tags.length ? '<div class="card-tags">'+tags.map(function(t){return '<span>'+esc(t)+'</span>';}).join('')+'</div>' : '')
+      + grad + adv + prof + '</div>';
+  }
+  /* 学科门类展示顺序 */
+  var GRAD_CATS = ['工学','理学','医学','农学','法学','文学','管理学','经济学'];
+  function gradHTML(grad, tab){
+    if(!grad || !grad[tab]) return '<div class="grad-empty">暂无收录该类型硕博点</div>';
+    var cats = grad[tab];
+    var html = '';
+    var any = false;
+    for(var i=0;i<GRAD_CATS.length;i++){
+      var c = GRAD_CATS[i];
+      var arr = cats[c];
+      if(!arr || !arr.length) continue;
+      any = true;
+      html += '<div class="grad-cat"><span class="grad-cat-name">'+esc(c)+'</span><span class="grad-cat-chips">'
+        + arr.map(function(p){ return '<span class="grad-chip">'+esc(p[0])+(p[1] ? '<em class="bd">博</em>' : '')+'</span>'; }).join('')
+        + '</span></div>';
+    }
+    return any ? html : '<div class="grad-empty">暂无收录该类型硕博点</div>';
+  }
+  function findGradItem(sch){
+    var arr = arrOf(state.selected, 'colleges') || [];
+    for(var i=0;i<arr.length;i++){ if(arr[i].n === sch) return arr[i]; }
+    return null;
+  }
+  var ADV_LEVELS = ['国家级一流','省级一流','国家级特色'];
+  var ADV_CATS = ['电气类','机械类','自动化类','电子信息类','计算机类','仪器类','能源动力类','材料类','化工与制药类','交通运输类','航空航天类','兵器类','核工程类','生物医学工程类','食品科学与工程类','交叉工程类','数学类','大气科学类','统计学类','动物生产类','动物医学类','临床医学类','口腔医学类','中医学类','法学类','马克思主义理论类','中国语言文学类','新闻传播类','工商管理类','物流管理与工程类'];
+  function advHTML(adv){
+    if(!adv) return '<div class="adv-empty">暂无收录优势专业</div>';
+    var html = '';
+    var any = false;
+    for(var li=0; li<ADV_LEVELS.length; li++){
+      var cats = adv[ADV_LEVELS[li]];
+      if(!cats) continue;
+      var all = [];
+      for(var ci=0; ci<ADV_CATS.length; ci++){
+        var arr = cats[ADV_CATS[ci]];
+        if(arr && arr.length){ all = all.concat(arr); }
+      }
+      all = all.filter(function(v,i,a){ return a.indexOf(v) === i; });
+      if(!all.length) continue;
+      any = true;
+      html += '<div class="adv-level"><span class="adv-level-name">'+esc(ADV_LEVELS[li])+'</span>'
+        + '<span class="grad-cat-chips">' + all.map(function(p){ return '<span class="grad-chip">'+esc(p)+'</span>'; }).join('') + '</span></div>';
+    }
+    return any ? html : '<div class="adv-empty">暂无收录优势专业</div>';
+  }
+  function cardCluster(e){
+    var more = '';
+    if(e.b || e.s || e.note){
+      more = '<details class="more"><summary>更多信息</summary>'
+        + (e.b ? '<div><b>批次 / 类型</b>'+esc(e.b)+'</div>' : '')
+        + (e.s ? '<div><b>所属一级产业</b>'+esc(e.s)+'</div>' : '')
+        + (e.note ? '<div><b>备注</b>'+esc(e.note)+'</div>' : '')
+        + '</details>';
+    }
+    var tags = [];
+    if(e.o) tags.push(esc(e.o));
+    if(e.y) tags.push(esc(String(e.y).replace(/年\s*$/,''))+' 年');
+    if(e.p) tags.push(esc(e.p));
+    var reps = '';
+    var repsArr = e.reps || [];
+    if(repsArr.length){
+      reps = '<button type="button" class="reps-btn" data-reps-open="0">代表企业（<span class="reps-n">'+repsArr.length+' 家</span>）<span class="caret">▾</span></button>'
+        + '<div class="reps-list" hidden>'
+        + repsArr.map(function(r){
+            return '<div class="reps-item"><div class="r-n">'+esc(r.n)
+              + (r.t ? '<span class="r-t">'+esc(r.t)+'</span>' : '')
+              + '</div>' + (r.p ? '<div class="r-p">'+esc(r.p)+'</div>' : '') + '</div>';
+          }).join('')
+        + '</div>';
+    } else {
+      reps = '<div class="reps-none">该集群暂未收录代表企业</div>';
+    }
+    return '<div class="card"><div class="card-top"><div class="card-title">'+esc(e.n)+'</div>'
+      + chipHTML(e.c || '产业集群', '#2B6CB0') + '</div>'
+      + (e.i ? '<div class="card-line"><b>主导产业</b>'+esc(e.i)+'</div>' : '')
+      + (tags.length ? '<div class="card-tags">'+tags.map(function(t){return '<span>'+t+'</span>';}).join('')+'</div>' : '')
+      + more + reps + '</div>';
+  }
+  function cardSoe(e){
+    var title = esc(e.n) + (e.s && e.s !== e.n ? '（'+esc(e.s)+'）' : '');
+    var more = '';
+    if(e.up || e.dn || e.r || e.d || e.pay){
+      more = '<details class="more"><summary>更多信息</summary>'
+        + (e.up ? '<div><b>上游产业链</b>'+esc(e.up)+'</div>' : '')
+        + (e.dn ? '<div><b>下游产业链</b>'+esc(e.dn)+'</div>' : '')
+        + (e.r ? '<div><b>营收 / 规模</b>'+esc(e.r)+'</div>' : '')
+        + (e.d ? '<div><b>行业地位</b>'+esc(e.d)+'</div>' : '')
+        + (e.pay ? '<div><b>薪酬福利</b>'+esc(e.pay)+'</div>' : '')
+        + '</details>';
+    }
+    var tags = [];
+    if(e.g) tags.push(esc(e.g));
+    if(e.cat) tags.push(esc(e.cat));
+    if(e.sub) tags.push(esc(e.sub));
+    return '<div class="card"><div class="card-top"><div class="card-title">'+title+'</div>'
+      + chipHTML(e.t || '国企', '#EA7A18') + '</div>'
+      + (tags.length ? '<div class="card-tags">'+tags.map(function(t){return '<span>'+t+'</span>';}).join('')+'</div>' : '')
+      + (e.b ? '<div class="card-line"><b>主营业务</b>'+esc(e.b)+'</div>' : '')
+      + (e.m ? '<div class="card-field"><b>招聘专业</b>'+esc(e.m)+'</div>' : '')
+      + (e.sc ? '<div class="card-field"><b>校招院校</b>'+esc(e.sc)+'</div>' : '')
+      + more + '</div>';
+  }
+  function cardEmerging(e){
+    if(e.src){
+      var tags = [];
+      if(e.cat) tags.push('<span>'+esc(e.cat)+'</span>');
+      if(e.sub) tags.push('<span>'+esc(e.sub)+'</span>');
+      return '<div class="card"><div class="card-top"><div class="card-title">'+esc(e.n)+'</div>'
+        + chipHTML(e.t || '重点企业', '#0E9F6E') + '</div>'
+        + (tags.length ? '<div class="card-tags">'+tags.join('')+'<span>山西重点企业</span></div>' : '')
+        + (e.b ? '<div class="card-line"><b>经营业务</b>'+esc(e.b)+'</div>' : '')
+        + (e.m ? '<div class="card-field"><b>招聘专业</b>'+esc(e.m)+'</div>' : '')
+        + (e.sc ? '<div class="card-field"><b>校招院校</b>'+esc(e.sc)+'</div>' : '')
+        + '</div>';
+    }
+    var tags = [];
+    if(e.ind) tags.push('<span>'+esc(e.ind)+'</span>');
+    if(e.sub) tags.push('<span>'+esc(e.sub)+'</span>');
+    if(e.role) tags.push('<span style="color:#0E9F6E;background:#E5F5EE">'+esc(e.role)+'</span>');
+    return '<div class="card"><div class="card-top"><div class="card-title">'+esc(e.n)+'</div>'
+      + chipHTML(e.t || '企业', '#0E9F6E') + '</div>'
+      + (tags.length ? '<div class="card-tags">'+tags.join('')+'</div>' : '')
+      + ((e.rev || e.prof) ? '<div class="card-field"><b>年营收</b>'+esc(e.rev || '—')+'　<b>年利润</b>'+esc(e.prof || '—')+'</div>' : '')
+      + (e.m ? '<div class="card-field"><b>招聘专业</b>'+esc(e.m)+'</div>' : '')
+      + '</div>';
+  }
+
+  /* ---------- 容器自适应 ---------- */
+  if(typeof ResizeObserver !== 'undefined'){
+    new ResizeObserver(function(){ chart.resize(); scheduleLabelUpdate(); }).observe(mapEl);
+  } else {
+    window.addEventListener('resize', function(){ chart.resize(); scheduleLabelUpdate(); });
+  }
+})();
+  </script>
+</body>
+</html>
