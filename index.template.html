@@ -259,6 +259,68 @@
   .ind-soe-head{font-size:12.5px;font-weight:700;color:var(--red-d);margin-bottom:4px;}
   .ind-soe-row{font-size:12px;color:#33475C;line-height:1.7;}
   .ind-soe-row b{color:#16324F;}
+  /* ---------- 全局编辑（大类切换+网站/产业/就业） ---------- */
+  .edit-kind-row{display:flex;align-items:center;gap:6px;padding:9px 16px;border-bottom:1px solid #F0E0DD;flex-wrap:wrap;}
+  .edit-kind{font-size:12.5px;font-weight:600;color:#33475C;background:#fff;border:1px solid #E3E9F0;border-radius:8px;padding:6px 15px;cursor:pointer;font-family:var(--sans);transition:.12s;}
+  .edit-kind:hover{border-color:var(--red);color:var(--red);}
+  .edit-kind.active{background:var(--red);border-color:var(--red);color:#fff;}
+  .edit-kind-sp{flex:1;}
+  .edit-global-body{padding:10px 16px 14px;overflow:auto;max-height:56vh;}
+  .edit-ghead{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .edit-ghead label{font-size:12.5px;font-weight:600;color:#16324F;}
+  .edit-ghead select{font-size:12.5px;padding:6px 9px;border:1px solid #E3E9F0;border-radius:8px;color:#16324F;background:#fff;font-family:var(--sans);min-width:200px;}
+  .edit-ghead select:focus{outline:none;border-color:var(--red);}
+  .edit-form-cols1{grid-template-columns:1fr;border-top:none;padding-top:0;}
+  .edit-form textarea{font-size:12.5px;padding:6px 9px;border:1px solid #E3E9F0;border-radius:7px;color:#16324F;font-family:var(--sans);resize:vertical;line-height:1.6;width:100%;box-sizing:border-box;}
+  .edit-form textarea:focus{outline:none;border-color:var(--red);}
+  .edit-item-url{font-size:11px;color:#93A2B4;margin-top:2px;word-break:break-all;}
+  .edit-city-body{padding:0 16px 12px;}
+  .edit-city-body .edit-city-row{padding:10px 0 6px;}
+  /* ---------- 数据编辑面板 ---------- */
+  #editDataBtn{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:#fff;background:var(--red);border:none;border-radius:9px;padding:7px 13px;cursor:pointer;transition:.15s;font-family:var(--sans);}
+  #editDataBtn:hover{background:var(--red-d);}
+  .edit-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;}
+  .edit-modal[hidden]{display:none;}
+  .edit-mask{position:absolute;inset:0;background:rgba(16,26,36,.55);}
+  .edit-box{position:relative;background:#fff;border-radius:14px;width:min(92vw,900px);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 12px 44px rgba(0,0,0,.32);}
+  .edit-head{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid #F0D8D5;font-size:15px;color:var(--red-d);}
+  .edit-head b{font-size:15px;}
+  .edit-hint{flex:1;font-size:11px;color:#8A98A8;font-weight:400;}
+  .edit-head button{border:none;background:none;font-size:22px;cursor:pointer;color:#8A98A8;line-height:1;padding:0 4px;}
+  .edit-head button:hover{color:var(--red);}
+  .edit-city-row{display:flex;align-items:center;gap:10px;padding:10px 16px;flex-wrap:wrap;}
+  .edit-city-row label{font-size:12.5px;font-weight:600;color:#16324F;}
+  .edit-city-row select{flex:1;min-width:200px;font-size:12.5px;padding:6px 9px;border:1px solid #E3E9F0;border-radius:8px;color:#16324F;background:#fff;font-family:var(--sans);}
+  .edit-act{font-size:12.5px;font-weight:600;color:#fff;background:var(--red);border:none;border-radius:8px;padding:7px 15px;cursor:pointer;font-family:var(--sans);}
+  .edit-act:hover{background:var(--red-d);}
+  .edit-act2{background:#fff;color:var(--red);border:1px solid var(--red);}
+  .edit-act2:hover{background:var(--red-l);}
+  .edit-tabs{display:flex;gap:6px;padding:0 16px 8px;flex-wrap:wrap;}
+  .edit-tab{font-size:12px;font-weight:600;color:#33475C;background:#F4F6F9;border:1px solid #E3E9F0;border-radius:8px;padding:5px 13px;cursor:pointer;font-family:var(--sans);}
+  .edit-tab.active{background:var(--red);border-color:var(--red);color:#fff;}
+  .edit-list{flex:1;overflow:auto;padding:2px 16px;max-height:34vh;min-height:90px;}
+  .edit-item{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #F0E0DD;border-radius:8px;background:#FFF9F8;padding:6px 10px;margin-bottom:6px;}
+  .edit-item-txt{font-size:12.5px;color:#33475C;line-height:1.5;flex:1;}
+  .edit-item-del{border:none;background:none;color:#C0392B;font-size:17px;cursor:pointer;line-height:1;padding:0 4px;}
+  .edit-item-del:hover{color:var(--red-d);}
+  .edit-empty{font-size:12px;color:#9AA9BA;padding:14px 4px;text-align:center;}
+  .edit-form{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px 12px;padding:10px 16px 12px;border-top:1px dashed #F0E0DD;}
+  .edit-f{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:#55677C;}
+  .edit-f em{color:var(--red);font-style:normal;}
+  .edit-f input[type="text"],.edit-f input[type="number"]{font-size:12.5px;padding:5px 8px;border:1px solid #E3E9F0;border-radius:7px;color:#16324F;font-family:var(--sans);}
+  .edit-f input:focus{outline:none;border-color:var(--red);}
+  .edit-f input[type="checkbox"]{width:16px;height:16px;accent-color:var(--red);}
+  .edit-form-actions{grid-column:1/-1;display:flex;gap:8px;}
+  .edit-form-actions .edit-add-btn{flex:1;}
+  .edit-cancel-btn{font-size:12.5px;font-weight:600;color:#33475C;background:#F4F6F9;border:1px solid #E3E9F0;border-radius:8px;padding:7px 18px;cursor:pointer;font-family:var(--sans);}
+  .edit-cancel-btn:hover{border-color:var(--red);color:var(--red);}
+  .edit-item-ops{display:flex;align-items:center;gap:2px;}
+  .edit-item-edit{border:1px solid #E9CFC9;background:#fff;color:var(--red);font-size:11px;border-radius:6px;padding:1px 8px;cursor:pointer;font-family:var(--sans);}
+  .edit-item-edit:hover{background:var(--red-l);}
+  .edit-item.edit-on{border-color:var(--red);background:#FEF0EE;box-shadow:0 0 0 1px var(--red);}
+  .edit-add-btn{grid-column:1/-1;font-size:12.5px;font-weight:600;color:#fff;background:var(--red);border:none;border-radius:8px;padding:7px 0;cursor:pointer;font-family:var(--sans);}
+  .edit-add-btn:hover{background:var(--red-d);}
+  .edit-msg{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:#16324F;color:#fff;font-size:12px;padding:7px 16px;border-radius:8px;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;max-width:86vw;overflow:hidden;text-overflow:ellipsis;}
   /* 产业观察-思维导图弹窗 */
   .ind-map-btn{display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:#fff;background:var(--red);border-radius:8px;padding:6px 14px;cursor:pointer;font-family:var(--sans);transition:.15s;}
   .ind-map-btn:hover{background:var(--red-d);}
@@ -367,6 +429,10 @@
         <input id="searchInput" type="text" placeholder="搜索城市 / 院校，如：大同 / 山西大学" autocomplete="off">
         <div id="searchDropdown" hidden></div>
       </div>
+      <button id="editDataBtn" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        数据编辑
+      </button>
       <button id="resetBtn" type="button">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg>
         返回全国
@@ -444,42 +510,14 @@
           </div>
         </section>
         <section class="empty-sec">
-          <div class="files-head"><h3>常用网站</h3></div>
-          <div class="sites-block">
-            <div class="sites-cat"><span class="sites-cat-name">高考升学</span><div class="sites-cat-list">
-              <a href="http://www.sxkszx.cn/index.html" target="_blank" rel="noopener">山西招生考试网</a>
-              <a href="https://gaokao.chsi.com.cn/" target="_blank" rel="noopener">阳光高考</a>
-              <a href="https://www.shanghairanking.cn/" target="_blank" rel="noopener">软科</a>
-              <a href="https://yz.chsi.com.cn/" target="_blank" rel="noopener">研招网</a>
-              <a href="https://xz.chsi.com.cn/home.action" target="_blank" rel="noopener">学职平台</a>
-              <a href="http://jyt.shanxi.gov.cn/" target="_blank" rel="noopener">山西省教育厅</a>
-              <a href="https://gaokao.chsi.com.cn/gkxx/zcdh/200702/20070228/754576.html" target="_blank" rel="noopener">高考体检</a>
-              <a href="http://zy.gclass365.com/accounts/login" target="_blank" rel="noopener">良师志愿</a>
-              <a href="https://qimingsx.github.io/gkdaohang/" target="_blank" rel="noopener">志愿导航</a>
-            </div></div>
-            <div class="sites-cat"><span class="sites-cat-name">在线课程</span><div class="sites-cat-list">
-              <a href="https://www.icourse163.org/" target="_blank" rel="noopener">中国大学MOOC</a>
-              <a href="https://www.icourses.cn/" target="_blank" rel="noopener">爱课程</a>
-              <a href="https://higher.smartedu.cn/" target="_blank" rel="noopener">国家高等教育智慧教育平台</a>
-            </div></div>
-            <div class="sites-cat"><span class="sites-cat-name">就业与国企招聘</span><div class="sites-cat-list">
-              <a href="https://www.ncss.cn/" target="_blank" rel="noopener">国家大学生就业服务平台</a>
-              <a href="https://dev.ncss.cn/jyyr" target="_blank" rel="noopener">供需对接就业育人项目平台</a>
-              <a href="https://www.iguopin.com/" target="_blank" rel="noopener">国聘</a>
-              <a href="https://gzw.shanxi.gov.cn/xwfb/gqzp/" target="_blank" rel="noopener">山西国资委·国企招聘</a>
-              <a href="http://job.mohrss.gov.cn/" target="_blank" rel="noopener">中国公共招聘网</a>
-              <a href="https://sxsjyggfw.cn/sxbys/web/" target="_blank" rel="noopener">山西省大学生就业服务平台</a>
-              <a href="https://crtyhr.com/" target="_blank" rel="noopener">太铁招聘</a>
-              <a href="https://www.zhipin.com/chengshi/c101100200/?ka=header-home" target="_blank" rel="noopener">BOSS直聘</a>
-            </div></div>
-          </div>
-        </section>
+          <div class="files-head"><h3>常用网站</h3><span class="files-more">数据编辑中可增删</span></div>
+          <div class="sites-block" id="sitesBlock"></div>
+        </section></section>
         <section class="empty-sec">
           <div class="files-head"><h3>产业观察</h3><span class="files-more">山西省 · 传统与新兴支柱产业</span></div>
           <div class="ind-block">
-            <div class="ind-group"><span class="ind-gname">传统支柱产业</span><div class="ind-chips" id="indTrad"></div></div>
-            <div class="ind-group"><span class="ind-gname">新兴支柱产业</span><div class="ind-chips" id="indNew"></div></div>
-            <div class="ind-detail" id="indDetail" hidden></div>
+            <div class="ind-group"><span class="ind-gname">传统支柱产业</span><div class="ind-chips" id="indTrad"></div><div class="ind-detail" id="indDetailT" hidden></div></div>
+            <div class="ind-group"><span class="ind-gname">新兴支柱产业</span><div class="ind-chips" id="indNew"></div><div class="ind-detail" id="indDetailN" hidden></div></div>
           </div>
         </section>
         <section class="empty-sec">
@@ -542,9 +580,34 @@
     var c = DATA.cities[base];
     return c ? (c[key] ? c[key].length : 0) : 0;
   }
+  var EDIT_KEY = 'qm_edit_cities_v1';
+  var EDIT_CACHE = {};
+  try{ EDIT_CACHE = JSON.parse(localStorage.getItem(EDIT_KEY) || '{}'); }catch(e){ EDIT_CACHE = {}; }
+  function editSaveLS(){ try{ localStorage.setItem(EDIT_KEY, JSON.stringify(EDIT_CACHE)); }catch(e){} }
+  /* 在线环境：尝试加载外部 data.json（GitHub 部署后用户自行编辑的数据） */
+  (function(){
+    if(location.protocol === 'file:') return;
+    try{
+      fetch('data.json').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+        if(!d || !d.cities || !d.stats) return;
+        if(window.APP_DATA && window.APP_DATA._ext) return;
+        if(d._sites){ try{ localStorage.setItem('qm_sites_v1', JSON.stringify(d._sites)); }catch(e){} }
+        if(d._ind){ try{ localStorage.setItem('qm_ind_v1', JSON.stringify(d._ind)); }catch(e){} }
+        if(d._job){ try{ localStorage.setItem('qm_job_v1', JSON.stringify(d._job)); }catch(e){} }
+        if(d._files){ try{ localStorage.setItem('qm_files_custom_v1', JSON.stringify(d._files.custom || [])); localStorage.setItem('qm_files_removed_v1', JSON.stringify(d._files.removed || [])); }catch(e){} }
+        try{ window.APP_DATA = d; }catch(e){}
+        location.reload();
+      }).catch(function(){});
+    }catch(e){}
+  })();
   function arrOf(base, key){
-    if(key === 'colleges'){ var L = DATA.colleges[base]; return L || []; }
+    var e = EDIT_CACHE[base];
+    if(key === 'colleges'){
+      if(e && e.colleges) return e.colleges;
+      var L = DATA.colleges[base]; return L || [];
+    }
     var c = DATA.cities[base];
+    if(e && e[key]) return e[key];
     return c ? (c[key] || []) : [];
   }
 
@@ -1185,7 +1248,8 @@
     '新生命': {sub:'生物制药 · 生物制品 · 医疗器械', note:'包括生物医药、生物育种、生物制造等。', firms:[['锦波生物','太原·重组胶原蛋白'],['太药控股','太原·制药'],['振东制药','长治·中药/创新药'],['康宝生物','长治·血液制品'],['亚宝药业','运城·制药'],['双雁药业','大同·制药'],['仟源医药','大同·制药'],['大禹生物','运城·生物制品'],['华润山西医药','太原·医药流通']]},
     '绿色环保': {sub:'节能环保装备 · 清洁能源 · 煤层气', note:'涉及节能环保技术、资源循环利用等。', firms:[['浩诚环保','长治·环保装备'],['蓝焰控股','太原·煤层气开发'],['华新燃气','太原·清洁能源'],['山西国际能源','太原·清洁发电'],['大唐山西','太原·风光电'],['华电山西','太原·清洁能源']], soe:['中国节能环保集团','中国资源循环集团']}
   };
-  var indDetailEl = document.getElementById('indDetail');
+  var indDetailTEl = document.getElementById('indDetailT');
+  var indDetailNEl = document.getElementById('indDetailN');
   var curInd = null;
   function renderInd(){
     document.getElementById('indTrad').innerHTML = IND_GROUPS[0].map(function(k){
@@ -1199,11 +1263,13 @@
     });
   }
   function showInd(k, btn){
-    var d = IND_DESC[k];
+    var d = indDesc(k);
     if(!d) return;
+    var box = btn.closest('#indTrad') ? indDetailTEl : indDetailNEl;
+    var other = (box === indDetailTEl) ? indDetailNEl : indDetailTEl;
     if(curInd === k){
       curInd = null;
-      indDetailEl.hidden = true;
+      box.hidden = true;
       btn.classList.remove('active');
       return;
     }
@@ -1211,7 +1277,8 @@
     document.querySelectorAll('.ind-chip').forEach(function(b){
       b.classList.toggle('active', b.dataset.k === k);
     });
-    indDetailEl.hidden = false;
+    box.hidden = false;
+    other.hidden = true;
     var html = '<div class="ind-d-head">' + k + '</div>';
     if(d.sub) html += '<div class="ind-d-sub">' + d.sub + '</div>';
     if(d.note) html += '<div class="ind-d-note">' + d.note + '</div>';
@@ -1232,7 +1299,7 @@
     } else {
       html += '<div class="ind-d-note">暂无对应央企，内容整理中。</div>';
     }
-    indDetailEl.innerHTML = html;
+    box.innerHTML = html;
   }
   var IND_SOE_INFO = {
     '中国中煤能源集团':{intro:'中央直接管理的煤炭生产骨干企业。',main:'煤炭开采与销售、煤化工、电力及煤矿装备。'},
@@ -1336,29 +1403,33 @@
     '华侨城集团':{intro:'文旅与新型城镇化央企。',main:'文旅综合开发、主题公园、地产开发。'},
     '南光（集团）':{intro:'总部位于澳门的中央企业。',main:'澳门油气零售、旅游会展、物流与综合服务。'}
   };
-  indDetailEl.addEventListener('click', function(ev){
-    var mb = ev.target.closest('.ind-map-btn');
-    if(mb){
-      var md = IND_DESC[mb.dataset.map];
-      if(md && md.map) openIndMap(md.map);
-      return;
-    }
-    var chip = ev.target.closest('.ind-soe-chip');
-    if(!chip) return;
-    var info = document.getElementById('indSoeInfo');
-    if(!info) return;
-    var name = chip.textContent;
-    var d = IND_SOE_INFO[name];
-    if(!d) return;
-    if(info.hidden === false && info.dataset.n === name){
-      info.hidden = true; return;
-    }
-    info.dataset.n = name;
-    info.hidden = false;
-    info.innerHTML = '<div class="ind-soe-head">' + name + '</div>' +
-      '<div class="ind-soe-row"><b>简介：</b>' + d.intro + '</div>' +
-      '<div class="ind-soe-row"><b>主营业务：</b>' + d.main + '</div>';
-  });
+  function bindIndDetail(box){
+    box.addEventListener('click', function(ev){
+      var mb = ev.target.closest('.ind-map-btn');
+      if(mb){
+        var md = indDesc(mb.dataset.map);
+        if(md && md.map) openIndMap(md.map);
+        return;
+      }
+      var chip = ev.target.closest('.ind-soe-chip');
+      if(!chip) return;
+      var info = box.querySelector('#indSoeInfo');
+      if(!info) return;
+      var name = chip.textContent;
+      var d = IND_SOE_INFO[name];
+      if(!d) return;
+      if(info.hidden === false && info.dataset.n === name){
+        info.hidden = true; return;
+      }
+      info.dataset.n = name;
+      info.hidden = false;
+      info.innerHTML = '<div class="ind-soe-head">' + name + '</div>' +
+        '<div class="ind-soe-row"><b>简介：</b>' + d.intro + '</div>' +
+        '<div class="ind-soe-row"><b>主营业务：</b>' + d.main + '</div>';
+    });
+  }
+  bindIndDetail(indDetailTEl);
+  bindIndDetail(indDetailNEl);
 
   function openIndMap(map){
     document.getElementById('indMapTitle').textContent = map.label;
@@ -1385,19 +1456,20 @@
     jobNav.querySelectorAll('.job-chip').forEach(function(b){
       b.classList.toggle('active', b.dataset.job === k);
     });
+    var jv = jobView(k);
     var html = '';
-    if(JOB_DOC[k]){
-      var d = JOB_DOC[k];
+    if(jv.doc){
+      var d = jv.doc;
       try{ window.open(d.url, '_blank'); }catch(e){}
       html = '<div class="job-desc">已在新标签页打开：<b>'+esc(d.title)+'</b></div>'
         +'<div class="job-tip">若未自动打开，请点此：<a href="'+esc(d.url)+'" target="_blank" rel="noopener" style="color:#2B6CB0;">'+esc(d.url)+'</a></div>';
-    } else if(JOB_GROUPS[k]){
-      html = JOB_GROUPS[k].map(function(gr){
+    } else if(jv.groups){
+      html = jv.groups.map(function(gr){
         return '<div class="job-group"><div class="job-group-title">'+esc(gr.g)+'</div>'
           +'<div class="job-items">'+gr.items.map(function(it){ return '<span class="job-item">'+esc(it)+'</span>'; }).join('')+'</div></div>';
       }).join('');
-    } else if(JOB_DESC[k]){
-      html = '<div class="job-desc">'+JOB_DESC[k].map(function(d){ return '· '+esc(d); }).join('<br>')+'</div>'
+    } else if(jv.desc.length){
+      html = '<div class="job-desc">'+jv.desc.map(function(d){ return '· '+esc(d); }).join('<br>')+'</div>'
         +'<div class="job-tip">详细单位与报考时间整理中，敬请期待</div>';
     }
     jobContent.innerHTML = html;
@@ -1492,6 +1564,19 @@
     function docIcon(){
       return '<span class="file-icon fi-doc"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3v6h6"/><path d="M13 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9z"/><path d="M8.5 14l2.5 2.5 4.5-4.5"/></svg></span>';
     }
+    function isImgSrc(u){
+      if(!u) return false;
+      return /\.(png|jpe?g|gif|webp|bmp|svg)(\?|#|$)/i.test(u) || /^data:image\//i.test(u);
+    }
+    function openFileImg(src, name){
+      var modal = document.getElementById('imgViewerModal');
+      if(!modal) return;
+      var t = document.getElementById('imgViewerTitle');
+      if(t) t.textContent = name || '图片预览';
+      var img = document.getElementById('imgViewerImg');
+      if(img) img.src = src;
+      modal.hidden = false;
+    }
     function renderFiles(){
       if(!filesList) return;
       var removed = lsGet(FILES_REM_KEY);
@@ -1500,14 +1585,19 @@
       DEFAULT_FILES.forEach(function(f){
         if(removed.indexOf(f.name) > -1) return;
         var del = editing ? '<button type="button" class="file-del" data-del="d:'+esc(f.name)+'" title="删除">×</button>' : '';
-        html += '<a class="file-item" href="'+esc(f.href)+'" target="_blank" rel="noopener">'+del+f.iconHTML
+        var imgAttr = isImgSrc(f.href) ? ' data-img="'+esc(f.href)+'"' : '';
+        var ext = imgAttr ? '' : ' target="_blank" rel="noopener"';
+        html += '<a class="file-item" href="'+esc(f.href)+'"'+imgAttr+ext+'>'+del+f.iconHTML
           +'<span class="file-meta"><span class="file-name">'+esc(f.name)+'</span><span class="file-tag">'+esc(f.tag)+'</span></span></a>';
       });
       custom.forEach(function(f){
         var icon = f.img ? '<img class="file-thumb" src="'+esc(f.img)+'" alt="">' : docIcon();
         var del = editing ? '<button type="button" class="file-del" data-del="c:'+esc(f.uid)+'" title="删除">×</button>' : '';
         var href = f.href || 'javascript:void(0)';
-        html += '<a class="file-item" href="'+esc(href)+'" target="_blank" rel="noopener">'+del+icon
+        var src = f.img || f.href || '';
+        var imgAttr = isImgSrc(src) ? ' data-img="'+esc(src)+'"' : '';
+        var ext = imgAttr ? '' : ' target="_blank" rel="noopener"';
+        html += '<a class="file-item" href="'+esc(href)+'"'+imgAttr+ext+'>'+del+icon
           +'<span class="file-meta"><span class="file-name">'+esc(f.name)+'</span><span class="file-tag">'+esc(f.tag||'自定义')+'</span></span></a>';
       });
       filesList.innerHTML = html;
@@ -1526,19 +1616,27 @@
     if(filesList){
       filesList.addEventListener('click', function(e){
         var del = e.target.closest('.file-del');
-        if(!del) return;
-        e.preventDefault(); e.stopPropagation();
-        var key = del.getAttribute('data-del') || '';
-        if(key.indexOf('d:') === 0){
-          var name = key.slice(2);
-          var removed = lsGet(FILES_REM_KEY);
-          if(removed.indexOf(name) < 0){ removed.push(name); lsSet(FILES_REM_KEY, removed); }
-        } else if(key.indexOf('c:') === 0){
-          var uid = key.slice(2);
-          var custom = lsGet(FILES_KEY).filter(function(f){ return f.uid !== uid; });
-          lsSet(FILES_KEY, custom);
+        if(del){
+          e.preventDefault(); e.stopPropagation();
+          var key = del.getAttribute('data-del') || '';
+          if(key.indexOf('d:') === 0){
+            var name = key.slice(2);
+            var removed = lsGet(FILES_REM_KEY);
+            if(removed.indexOf(name) < 0){ removed.push(name); lsSet(FILES_REM_KEY, removed); }
+          } else if(key.indexOf('c:') === 0){
+            var uid = key.slice(2);
+            var custom = lsGet(FILES_KEY).filter(function(f){ return f.uid !== uid; });
+            lsSet(FILES_KEY, custom);
+          }
+          renderFiles();
+          return;
         }
-        renderFiles();
+        var imgA = e.target.closest('.file-item[data-img]');
+        if(imgA){
+          e.preventDefault();
+          var nm = imgA.querySelector('.file-name');
+          openFileImg(imgA.getAttribute('data-img'), nm ? nm.textContent : '图片预览');
+        }
       });
     }
     if(addLinkBtn){
@@ -1586,6 +1684,583 @@
     }
     renderFiles();
   })();
+
+  /* ========== 数据编辑面板 ========== */
+  var EDIT_TABS = [
+    {key:'clusters', label:'产业集群', fields:[
+      {k:'n', label:'集群名称', ph:'如：XX市XX产业集群', req:1},
+      {k:'c', label:'类型', ph:'战略性新兴 / 先进制造 / 创新型'},
+      {k:'i', label:'主导产业', ph:'如：轨道交通装备'},
+      {k:'note', label:'备注', ph:'选填'},
+      {k:'reps', label:'代表企业（逗号分隔）', ph:'企业1,企业2'}
+    ]},
+    {key:'soe', label:'优质央国企', fields:[
+      {k:'n', label:'企业名称', ph:'如：XX集团', req:1},
+      {k:'t', label:'类型', ph:'央企 / 省属国企'},
+      {k:'b', label:'主营业务', ph:'选填'},
+      {k:'m', label:'招聘专业', ph:'选填'}
+    ]},
+    {key:'emerging', label:'新兴产业名企', fields:[
+      {k:'n', label:'企业名称', ph:'如：XX科技', req:1},
+      {k:'ind', label:'所属行业', ph:'如：新能源'},
+      {k:'sub', label:'细分领域', ph:'选填'},
+      {k:'rev', label:'年营收', ph:'选填'},
+      {k:'prof', label:'年利润', ph:'选填'}
+    ]},
+    {key:'colleges', label:'本科院校', fields:[
+      {k:'n', label:'院校名称', ph:'如：XX大学', req:1},
+      {k:'t', label:'层次', ph:'985 / 211 / 双一流 / 留空'},
+      {k:'m', label:'民办', type:'checkbox'},
+      {k:'ind', label:'行业背景标签（逗号分隔）', ph:'如：卫生,交通'}
+    ]}
+  ];
+  var editCity = null;
+  var editTab = 'clusters';
+  var editIdx = null;
+  /* 全局编辑：常用网站 / 产业观察 / 稳就业 */
+  var SITE_CATS = ['高考升学','在线课程','就业与国企招聘'];
+  var SITES = [
+    {cat:'高考升学', name:'山西招生考试网', url:'http://www.sxkszx.cn/index.html'},
+    {cat:'高考升学', name:'阳光高考', url:'https://gaokao.chsi.com.cn/'},
+    {cat:'高考升学', name:'软科', url:'https://www.shanghairanking.cn/'},
+    {cat:'高考升学', name:'研招网', url:'https://yz.chsi.com.cn/'},
+    {cat:'高考升学', name:'学职平台', url:'https://xz.chsi.com.cn/home.action'},
+    {cat:'高考升学', name:'山西省教育厅', url:'http://jyt.shanxi.gov.cn/'},
+    {cat:'高考升学', name:'高考体检', url:'https://gaokao.chsi.com.cn/gkxx/zcdh/200702/20070228/754576.html'},
+    {cat:'高考升学', name:'良师志愿', url:'http://zy.gclass365.com/accounts/login'},
+    {cat:'高考升学', name:'志愿导航', url:'https://qimingsx.github.io/gkdaohang/'},
+    {cat:'在线课程', name:'中国大学MOOC', url:'https://www.icourse163.org/'},
+    {cat:'在线课程', name:'爱课程', url:'https://www.icourses.cn/'},
+    {cat:'在线课程', name:'国家高等教育智慧教育平台', url:'https://higher.smartedu.cn/'},
+    {cat:'就业与国企招聘', name:'国家大学生就业服务平台', url:'https://www.ncss.cn/'},
+    {cat:'就业与国企招聘', name:'供需对接就业育人项目平台', url:'https://dev.ncss.cn/jyyr'},
+    {cat:'就业与国企招聘', name:'国聘', url:'https://www.iguopin.com/'},
+    {cat:'就业与国企招聘', name:'山西国资委·国企招聘', url:'https://gzw.shanxi.gov.cn/xwfb/gqzp/'},
+    {cat:'就业与国企招聘', name:'中国公共招聘网', url:'http://job.mohrss.gov.cn/'},
+    {cat:'就业与国企招聘', name:'山西省大学生就业服务平台', url:'https://sxsjyggfw.cn/sxbys/web/'},
+    {cat:'就业与国企招聘', name:'太铁招聘', url:'https://crtyhr.com/'},
+    {cat:'就业与国企招聘', name:'BOSS直聘', url:'https://www.zhipin.com/chengshi/c101100200/?ka=header-home'}
+  ];
+  var SITE_EDIT = {custom: [], removed: []};
+  try{ SITE_EDIT = JSON.parse(localStorage.getItem('qm_sites_v1') || '{"custom":[],"removed":[]}'); }catch(e){ SITE_EDIT = {custom: [], removed: []}; }
+  var IND_EDIT = {};
+  try{ IND_EDIT = JSON.parse(localStorage.getItem('qm_ind_v1') || '{}'); }catch(e){ IND_EDIT = {}; }
+  var JOB_EDIT = {};
+  try{ JOB_EDIT = JSON.parse(localStorage.getItem('qm_job_v1') || '{}'); }catch(e){ JOB_EDIT = {}; }
+  function renderSites(){
+    var box = document.getElementById('sitesBlock');
+    if(!box) return;
+    var removed = SITE_EDIT.removed || [];
+    var custom = SITE_EDIT.custom || [];
+    var html = '';
+    SITE_CATS.forEach(function(cat){
+      var items = SITES.filter(function(s){ return s.cat === cat && removed.indexOf(s.name) === -1; });
+      custom.filter(function(s){ return s.cat === cat; }).forEach(function(s){ items.push(s); });
+      html += '<div class="sites-cat"><span class="sites-cat-name">' + esc(cat) + '</span><div class="sites-cat-list">'
+        + items.map(function(s){ return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener" title="' + esc(s.name) + '">' + esc(s.name) + '</a>'; }).join('')
+        + '</div></div>';
+    });
+    box.innerHTML = html;
+  }
+  function indDesc(key){
+    var d = IND_DESC[key] || {};
+    var e = IND_EDIT[key];
+    if(!e) return d;
+    var o = {};
+    o.sub = (e.sub !== undefined) ? e.sub : d.sub;
+    o.note = (e.note !== undefined) ? e.note : d.note;
+    o.firms = (e.firms !== undefined) ? e.firms : d.firms;
+    o.soe = (e.soe !== undefined) ? e.soe : d.soe;
+    o.map = d.map;
+    return o;
+  }
+  function jobView(k){
+    var e = JOB_EDIT[k];
+    if(!e) return {doc: JOB_DOC[k] || null, groups: JOB_GROUPS[k] || null, desc: JOB_DESC[k] || []};
+    return {
+      doc: (e.link && e.link.url) ? e.link : (JOB_DOC[k] || null),
+      groups: JOB_GROUPS[k] || null,
+      desc: (e.desc && e.desc.length) ? e.desc : (JOB_DESC[k] || [])
+    };
+  }
+  var editKind = 'city';
+  var siteEditIdx = null;
+  function fillCitySel(){
+    var sel = document.getElementById('editCitySel');
+    if(!sel) return;
+    var byProv = {};
+    Object.keys(DATA.cities).forEach(function(c){
+      var p = (DATA.cities[c].province || '其他');
+      (byProv[p] = byProv[p] || []).push(c);
+    });
+    var html = '';
+    Object.keys(byProv).sort().forEach(function(p){
+      html += '<optgroup label="' + esc(p) + '">' + byProv[p].slice().sort().map(function(c){ return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('') + '</optgroup>';
+    });
+    sel.innerHTML = html;
+    var cur = (state && state.selected && DATA.cities[state.selected]) ? state.selected : Object.keys(DATA.cities)[0];
+    if(cur) sel.value = cur;
+    editCity = cur;
+  }
+  function fillIndSel(){
+    var sel = document.getElementById('editIndSel');
+    if(!sel) return;
+    var html = '';
+    IND_GROUPS.forEach(function(gr, gi){
+      html += '<optgroup label="' + (gi === 0 ? '传统支柱产业' : '新兴支柱产业') + '">'
+        + gr.map(function(k){ return '<option value="' + esc(k) + '">' + esc(k) + '</option>'; }).join('') + '</optgroup>';
+    });
+    sel.innerHTML = html;
+  }
+  function fillJobSel(){
+    var sel = document.getElementById('editJobSel');
+    if(!sel) return;
+    sel.innerHTML = JOB_KEYS.map(function(k){ return '<option value="' + esc(k) + '">' + esc(k) + '</option>'; }).join('');
+  }
+  function renderEditKind(){
+    document.querySelectorAll('.edit-kind').forEach(function(b){
+      b.classList.toggle('active', b.dataset.k === editKind);
+    });
+    document.getElementById('editCityBody').hidden = (editKind !== 'city');
+    document.getElementById('editSitesBody').hidden = (editKind !== 'sites');
+    document.getElementById('editIndBody').hidden = (editKind !== 'ind');
+    document.getElementById('editJobBody').hidden = (editKind !== 'job');
+    if(editKind === 'sites') renderSiteList();
+    else if(editKind === 'ind') renderIndForm();
+    else if(editKind === 'job') renderJobForm();
+  }
+  function getSiteRows(){
+    var cat = document.getElementById('editSiteCat').value;
+    var removed = SITE_EDIT.removed || [];
+    var custom = SITE_EDIT.custom || [];
+    var rows = [];
+    SITES.forEach(function(s){
+      if(s.cat === cat && removed.indexOf(s.name) === -1) rows.push({name: s.name, url: s.url, bi: true});
+    });
+    custom.forEach(function(s, i){
+      if(s.cat === cat) rows.push({name: s.name, url: s.url, ci: i});
+    });
+    return rows;
+  }
+  function renderSiteList(){
+    var box = document.getElementById('editSiteList');
+    if(!box) return;
+    var rows = getSiteRows();
+    if(!rows.length){ box.innerHTML = '<div class="edit-empty">该分类暂无网站</div>'; return; }
+    box.innerHTML = rows.map(function(r, idx){
+      return '<div class="edit-item' + (siteEditIdx === idx ? ' edit-on' : '') + '"><div class="edit-item-txt">' + esc(r.name)
+        + '<div class="edit-item-url">' + esc(r.url) + '</div></div>'
+        + '<div class="edit-item-ops"><button type="button" class="edit-site-edit" data-idx="' + idx + '" title="编辑">改</button>'
+        + '<button type="button" class="edit-site-del" data-idx="' + idx + '" title="删除">×</button></div></div>';
+    }).join('');
+  }
+  function renderIndForm(){
+    var sel = document.getElementById('editIndSel');
+    if(!sel || !sel.value) return;
+    var k = sel.value;
+    var d = indDesc(k);
+    var e = IND_EDIT[k] || {};
+    document.getElementById('efIndSub').value = (e.sub !== undefined) ? e.sub : (d.sub || '');
+    document.getElementById('efIndNote').value = (e.note !== undefined) ? e.note : (d.note || '');
+    var f = (e.firms !== undefined) ? e.firms : (d.firms || []);
+    document.getElementById('efIndFirms').value = f.map(function(x){ return Array.isArray(x) ? x.join('·') : String(x); }).join('\n');
+    var s = (e.soe !== undefined) ? e.soe : (d.soe || []);
+    document.getElementById('efIndSoe').value = s.join(', ');
+  }
+  function saveInd(){
+    var sel = document.getElementById('editIndSel');
+    if(!sel || !sel.value) return;
+    var k = sel.value;
+    IND_EDIT[k] = {
+      sub: document.getElementById('efIndSub').value.trim(),
+      note: document.getElementById('efIndNote').value.trim(),
+      firms: document.getElementById('efIndFirms').value.split('\n').map(function(l){ return l.trim(); }).filter(Boolean).map(function(l){
+        var i = l.indexOf('·');
+        if(i > 0) return [l.slice(0, i), l.slice(i + 1)];
+        return [l, ''];
+      }),
+      soe: document.getElementById('efIndSoe').value.split(/[,，]/).map(function(s2){ return s2.trim(); }).filter(Boolean)
+    };
+    try{ localStorage.setItem('qm_ind_v1', JSON.stringify(IND_EDIT)); }catch(e){}
+    showEditMsg('已保存产业信息：' + k + '（刷新后生效）');
+  }
+  function resetInd(){
+    var k = document.getElementById('editIndSel').value;
+    if(!k) return;
+    delete IND_EDIT[k];
+    try{ localStorage.setItem('qm_ind_v1', JSON.stringify(IND_EDIT)); }catch(e){}
+    renderIndForm();
+    showEditMsg('已还原内置信息：' + k);
+  }
+  function renderJobForm(){
+    var sel = document.getElementById('editJobSel');
+    if(!sel || !sel.value) return;
+    var k = sel.value;
+    var e = JOB_EDIT[k] || {};
+    var d = JOB_DESC[k] || [];
+    document.getElementById('efJobDesc').value = (e.desc && e.desc.length ? e.desc : d).join('\n');
+    var link = e.link || JOB_DOC[k] || null;
+    document.getElementById('efJobLinkTitle').value = link ? (link.title || '') : '';
+    document.getElementById('efJobLinkUrl').value = link ? (link.url || '') : '';
+  }
+  function saveJob(){
+    var k = document.getElementById('editJobSel').value;
+    if(!k) return;
+    var desc = document.getElementById('efJobDesc').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    var title = document.getElementById('efJobLinkTitle').value.trim();
+    var url = document.getElementById('efJobLinkUrl').value.trim();
+    var link = (title || url) ? {title: (title || '点击打开'), url: url} : null;
+    JOB_EDIT[k] = {desc: desc, link: link};
+    try{ localStorage.setItem('qm_job_v1', JSON.stringify(JOB_EDIT)); }catch(e){}
+    showEditMsg('已保存就业信息：' + k + '（刷新后生效）');
+  }
+  function resetJob(){
+    var k = document.getElementById('editJobSel').value;
+    if(!k) return;
+    delete JOB_EDIT[k];
+    try{ localStorage.setItem('qm_job_v1', JSON.stringify(JOB_EDIT)); }catch(e){}
+    renderJobForm();
+    showEditMsg('已还原内置信息：' + k);
+  }
+  function openEditor(){
+    var modal = document.getElementById('editModal');
+    if(!modal) return;
+    editKind = 'city';
+    editIdx = null;
+    siteEditIdx = null;
+    fillCitySel();
+    fillIndSel();
+    fillJobSel();
+    editTab = 'clusters';
+    renderEditKind();
+    renderEditTabs();
+    renderEditList();
+    renderEditForm();
+    modal.hidden = false;
+  }
+  function closeEditor(){
+    var modal = document.getElementById('editModal');
+    if(modal) modal.hidden = true;
+  }
+  function renderEditTabs(){
+    var tabs = document.getElementById('editTabs');
+    if(!tabs) return;
+    tabs.innerHTML = EDIT_TABS.map(function(tb){
+      return '<button type="button" class="edit-tab' + (tb.key === editTab ? ' active' : '') + '" data-k="' + tb.key + '">' + tb.label + '</button>';
+    }).join('');
+  }
+  function itemSummary(it, key){
+    if(key === 'clusters'){
+      var s = [it.c, it.i, it.note].filter(Boolean).join(' · ');
+      return it.n + (s ? '　' + s : '');
+    }
+    if(key === 'soe') return it.n + (it.b ? '　' + it.b : '') + (it.t ? '　[' + it.t + ']' : '');
+    if(key === 'emerging') return it.n + (it.ind ? '　' + it.ind : '') + (it.sub ? '·' + it.sub : '') + (it.rev ? '　营收' + it.rev : '');
+    if(key === 'colleges'){
+      var tags = [];
+      if(it.t) tags.push(it.t);
+      if(it.m) tags.push('民办');
+      if(it.ind && it.ind.length) tags = tags.concat(it.ind);
+      return it.n + (tags.length ? '　[' + tags.join(',') + ']' : '');
+    }
+    return it.n || '';
+  }
+  function getEditView(){
+    var e = EDIT_CACHE[editCity];
+    if(e && e[editTab]) return e[editTab];
+    if(editTab === 'colleges') return DATA.colleges[editCity] || [];
+    var c = DATA.cities[editCity];
+    return c ? (c[editTab] || []) : [];
+  }
+  function ensureEditArr(){
+    if(!EDIT_CACHE[editCity]) EDIT_CACHE[editCity] = {};
+    if(!EDIT_CACHE[editCity][editTab]){
+      var src = getEditView();
+      EDIT_CACHE[editCity][editTab] = JSON.parse(JSON.stringify(src || []));
+    }
+    return EDIT_CACHE[editCity][editTab];
+  }
+  function renderEditList(){
+    var box = document.getElementById('editList');
+    if(!box) return;
+    var arr = getEditView();
+    if(!arr.length){
+      box.innerHTML = '<div class="edit-empty">该城市暂无「' + (EDIT_TABS.find(function(t){return t.key===editTab;}) || {}).label + '」条目，可在下方添加</div>';
+      return;
+    }
+    box.innerHTML = arr.map(function(it, idx){
+      var editing = (editIdx === idx) ? ' edit-on' : '';
+      return '<div class="edit-item' + editing + '"><div class="edit-item-txt">' + esc(itemSummary(it, editTab)) + '</div>'
+        + '<div class="edit-item-ops"><button type="button" class="edit-item-edit" data-idx="' + idx + '" title="编辑">改</button>'
+        + '<button type="button" class="edit-item-del" data-idx="' + idx + '" title="删除">×</button></div></div>';
+    }).join('');
+  }
+  function renderEditForm(){
+    var form = document.getElementById('editForm');
+    if(!form) return;
+    var tb = EDIT_TABS.find(function(t){ return t.key === editTab; });
+    var editing = (editIdx !== null);
+    var cur = null;
+    if(editing){
+      var arr0 = getEditView();
+      if(editIdx >= 0 && editIdx < arr0.length) cur = arr0[editIdx];
+    }
+    var html = tb.fields.map(function(f){
+      var v = '';
+      if(cur){
+        if(f.type === 'checkbox'){ v = cur[f.k] ? ' checked' : ''; }
+        else { v = (cur[f.k] !== undefined && cur[f.k] !== null) ? esc(String(cur[f.k])) : ''; }
+      }
+      if(f.type === 'checkbox'){
+        return '<label class="edit-f"><span>' + f.label + '</span><input type="checkbox" id="ef_' + f.k + '"' + v + '></label>';
+      }
+      return '<label class="edit-f"><span>' + f.label + (f.req ? ' <em>*</em>' : '') + '</span><input type="text" id="ef_' + f.k + '" value="' + v + '" placeholder="' + esc(f.ph || '') + '"></label>';
+    }).join('');
+    if(editing){
+      html += '<div class="edit-form-actions"><button type="button" id="editAddBtn" class="edit-add-btn">保存修改</button>'
+        + '<button type="button" id="editCancelBtn" class="edit-cancel-btn">取消</button></div>';
+    } else {
+      html += '<button type="button" id="editAddBtn" class="edit-add-btn">添加</button>';
+    }
+    form.innerHTML = html;
+    var addBtn = document.getElementById('editAddBtn');
+    if(addBtn) addBtn.addEventListener('click', doAdd);
+  }
+  function doAdd(){
+    var tb = EDIT_TABS.find(function(t){ return t.key === editTab; });
+    var val = {};
+    var ok = true;
+    tb.fields.forEach(function(f){
+      var el = document.getElementById('ef_' + f.k);
+      if(!el) return;
+      if(f.type === 'checkbox'){ val[f.k] = el.checked; return; }
+      val[f.k] = el.value.trim();
+      if(f.req && !val[f.k]) ok = false;
+    });
+    if(!ok){ showEditMsg('请填写必填项（带 *）'); return; }
+    var it;
+    if(editTab === 'clusters'){
+      it = {n: val.n, c: val.c, i: val.i, note: val.note};
+      if(val.reps) it.reps = val.reps.split(/[,，、;；]/).map(function(s){ return s.trim(); }).filter(Boolean).map(function(s){ return {n: s}; });
+    } else if(editTab === 'soe'){
+      it = {n: val.n, t: val.t, b: val.b, m: val.m};
+    } else if(editTab === 'emerging'){
+      it = {n: val.n, ind: val.ind, sub: val.sub, rev: val.rev, prof: val.prof};
+    } else {
+      it = {n: val.n, t: val.t, m: val.m ? true : false};
+      if(val.ind) it.ind = val.ind.split(/[,，、;；]/).map(function(s){ return s.trim(); }).filter(Boolean);
+    }
+    var arr1 = ensureEditArr();
+    if(editIdx !== null){
+      if(editIdx >= 0 && editIdx < arr1.length){
+        var oldN = arr1[editIdx].n || '';
+        arr1[editIdx] = it;
+        editIdx = null;
+        editSaveLS();
+        renderEditList();
+        renderEditForm();
+        showEditMsg('已修改：' + oldN + ' → ' + it.n);
+        return;
+      }
+      editIdx = null;
+    }
+    arr1.push(it);
+    editSaveLS();
+    renderEditList();
+    renderEditForm();
+    showEditMsg('已添加：' + it.n);
+  }
+  function showEditMsg(txt){
+    var m = document.getElementById('editMsg');
+    if(!m) return;
+    m.textContent = txt;
+    m.style.opacity = '1';
+    clearTimeout(m._t);
+    m._t = setTimeout(function(){ m.style.opacity = '0'; }, 2200);
+  }
+  function mergedData(){
+    var out = JSON.parse(JSON.stringify(DATA));
+    out._ext = true;
+    Object.keys(EDIT_CACHE).forEach(function(city){
+      var e = EDIT_CACHE[city];
+      ['clusters','soe','emerging'].forEach(function(k2){
+        if(e[k2] && out.cities[city]) out.cities[city][k2] = e[k2];
+      });
+      if(e.colleges) out.colleges[city] = e.colleges;
+    });
+    var cl = 0, so = 0, em = 0;
+    Object.keys(out.cities).forEach(function(c){
+      cl += (out.cities[c].clusters || []).length;
+      so += (out.cities[c].soe || []).length;
+      em += (out.cities[c].emerging || []).length;
+    });
+    out.stats = {city_count: Object.keys(out.cities).length, cluster_total: cl, soe_total: so, emerging_total: em};
+    out._sites = SITE_EDIT;
+    out._ind = IND_EDIT;
+    out._job = JOB_EDIT;
+    try{
+      out._files = {
+        custom: JSON.parse(localStorage.getItem('qm_files_custom_v1') || '[]'),
+        removed: JSON.parse(localStorage.getItem('qm_files_removed_v1') || '[]')
+      };
+    }catch(e){ out._files = {custom: [], removed: []}; }
+    return out;
+  }
+  function doExport(){
+    var out = mergedData();
+    var blob = new Blob([JSON.stringify(out)], {type: 'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'data.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+    showEditMsg('已导出 data.json，上传到 GitHub 仓库即可在线生效');
+  }
+  renderSites();
+  /* 事件委托：弹窗元素在主 JS 之后解析，统一挂到 document 上，冒泡命中 */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if(t && t.id === 'editDataBtn'){ openEditor(); return; }
+    if(t && (t.id === 'editMask' || t.id === 'editClose')){ closeEditor(); return; }
+    var kindBtn = t && t.closest ? t.closest('.edit-kind') : null;
+    if(kindBtn){
+      editKind = kindBtn.dataset.k;
+      editIdx = null;
+      siteEditIdx = null;
+      renderEditKind();
+      return;
+    }
+    if(t && t.id === 'editSiteAdd'){
+      var name = document.getElementById('efSiteName').value.trim();
+      var url = document.getElementById('efSiteUrl').value.trim();
+      var cat = document.getElementById('editSiteCat').value;
+      if(!name || !url){ showEditMsg('请填写网站名称和网址'); return; }
+      if(siteEditIdx !== null){
+        var rows0 = getSiteRows();
+        var r0 = rows0[siteEditIdx];
+        if(r0){
+          if(r0.bi){ (SITE_EDIT.removed = SITE_EDIT.removed || []).push(r0.name); }
+          else { SITE_EDIT.custom.splice(r0.ci, 1); }
+        }
+        SITE_EDIT.custom = SITE_EDIT.custom || [];
+        SITE_EDIT.custom.push({cat: cat, name: name, url: url});
+        siteEditIdx = null;
+        try{ localStorage.setItem('qm_sites_v1', JSON.stringify(SITE_EDIT)); }catch(e){}
+        renderSiteList();
+        document.getElementById('efSiteName').value = '';
+        document.getElementById('efSiteUrl').value = '';
+        document.getElementById('editSiteAdd').textContent = '添加网站';
+        showEditMsg('已修改：' + (r0 ? r0.name : '') + ' → ' + name);
+        return;
+      }
+      SITE_EDIT.custom = SITE_EDIT.custom || [];
+      SITE_EDIT.custom.push({cat: cat, name: name, url: url});
+      try{ localStorage.setItem('qm_sites_v1', JSON.stringify(SITE_EDIT)); }catch(e){}
+      renderSiteList();
+      document.getElementById('efSiteName').value = '';
+      document.getElementById('efSiteUrl').value = '';
+      showEditMsg('已添加：' + name + '（已保存）');
+      return;
+    }
+    var se = t && t.closest ? t.closest('.edit-site-edit') : null;
+    if(se){
+      siteEditIdx = parseInt(se.getAttribute('data-idx'), 10);
+      var rows1 = getSiteRows();
+      var rr = rows1[siteEditIdx];
+      if(rr){
+        document.getElementById('efSiteName').value = rr.name;
+        document.getElementById('efSiteUrl').value = rr.url;
+        document.getElementById('editSiteAdd').textContent = '保存修改';
+      }
+      renderSiteList();
+      return;
+    }
+    var sd = t && t.closest ? t.closest('.edit-site-del') : null;
+    if(sd){
+      var idx2 = parseInt(sd.getAttribute('data-idx'), 10);
+      var rows2 = getSiteRows();
+      var r2 = rows2[idx2];
+      if(r2){
+        if(r2.bi){ (SITE_EDIT.removed = SITE_EDIT.removed || []).push(r2.name); }
+        else { SITE_EDIT.custom.splice(r2.ci, 1); }
+        if(siteEditIdx === idx2) siteEditIdx = null;
+        try{ localStorage.setItem('qm_sites_v1', JSON.stringify(SITE_EDIT)); }catch(e){}
+        renderSiteList();
+        showEditMsg('已删除：' + r2.name + '（已保存）');
+      }
+      return;
+    }
+    if(t && t.id === 'editIndSave'){ saveInd(); return; }
+    if(t && t.id === 'editIndReset'){ resetInd(); return; }
+    if(t && t.id === 'editJobSave'){ saveJob(); return; }
+    if(t && t.id === 'editJobReset'){ resetJob(); return; }
+    var tabBtn = t && t.closest ? t.closest('.edit-tab') : null;
+    if(tabBtn){
+      var m = document.getElementById('editModal');
+      if(m && !m.hidden){
+        editTab = tabBtn.dataset.k;
+        editIdx = null;
+        renderEditTabs();
+        renderEditList();
+        renderEditForm();
+        return;
+      }
+    }
+    var editBtn = t && t.closest ? t.closest('.edit-item-edit') : null;
+    if(editBtn){
+      ensureEditArr();
+      editIdx = parseInt(editBtn.getAttribute('data-idx'), 10);
+      renderEditList();
+      renderEditForm();
+      showEditMsg('正在修改第 ' + (editIdx + 1) + ' 条，改完点「保存修改」');
+      return;
+    }
+    if(t && t.id === 'editCancelBtn'){
+      editIdx = null;
+      renderEditForm();
+      return;
+    }
+    var delBtn = t && t.closest ? t.closest('.edit-item-del') : null;
+    if(delBtn){
+      var idx = parseInt(delBtn.getAttribute('data-idx'), 10);
+      var arr = ensureEditArr();
+      if(idx >= 0 && idx < arr.length) arr.splice(idx, 1);
+      if(editIdx === idx) editIdx = null;
+      editSaveLS();
+      renderEditList();
+      renderEditForm();
+      showEditMsg('已删除');
+      return;
+    }
+    if(t && t.id === 'editSaveBtn'){
+      if(editKind === 'sites'){ try{ localStorage.setItem('qm_sites_v1', JSON.stringify(SITE_EDIT)); }catch(e){} }
+      else if(editKind === 'ind'){ try{ localStorage.setItem('qm_ind_v1', JSON.stringify(IND_EDIT)); }catch(e){} }
+      else if(editKind === 'job'){ try{ localStorage.setItem('qm_job_v1', JSON.stringify(JOB_EDIT)); }catch(e){} }
+      else { editSaveLS(); }
+      showEditMsg('已保存到本机（刷新后仍生效）');
+      return;
+    }
+    if(t && t.id === 'editExportBtn'){ doExport(); return; }
+  });
+  document.addEventListener('change', function(e){
+    var t = e.target;
+    if(!t) return;
+    if(t.id === 'editCitySel'){
+      editCity = t.value;
+      editIdx = null;
+      renderEditList();
+      renderEditForm();
+    } else if(t.id === 'editSiteCat'){
+      siteEditIdx = null;
+      renderSiteList();
+    } else if(t.id === 'editIndSel'){
+      renderIndForm();
+    } else if(t.id === 'editJobSel'){
+      renderJobForm();
+    }
+  }, true);
 
   /* ---------- 面板 ---------- */
   panelClose.addEventListener('click', function(){
@@ -1863,8 +2538,8 @@
     for(var i=0;i<arr.length;i++){ if(arr[i].n === sch) return arr[i]; }
     return null;
   }
-  var ADV_LEVELS = ['国家级一流','省级一流','国家级特色'];
-  var ADV_CATS = ['电气类','机械类','自动化类','电子信息类','计算机类','仪器类','能源动力类','材料类','化工与制药类','交通运输类','航空航天类','兵器类','核工程类','生物医学工程类','食品科学与工程类','交叉工程类','数学类','大气科学类','统计学类','动物生产类','动物医学类','临床医学类','口腔医学类','中医学类','法学类','马克思主义理论类','中国语言文学类','新闻传播类','工商管理类','物流管理与工程类'];
+  var ADV_LEVELS = ['国家级一流','省级一流','国家级特色','省级特色'];
+  var ADV_CATS = ['电气类','机械类','自动化类','电子信息类','计算机类','仪器类','能源动力类','材料类','化工与制药类','交通运输类','航空航天类','兵器类','核工程类','生物医学工程类','食品科学与工程类','交叉工程类','数学类','大气科学类','统计学类','动物生产类','动物医学类','临床医学类','口腔医学类','中医学类','法学类','马克思主义理论类','中国语言文学类','新闻传播类','工商管理类','物流管理与工程类','矿业类','测绘类'];
   function advHTML(adv){
     if(!adv) return '<div class="adv-empty">暂无收录优势专业</div>';
     var html = '';
@@ -2002,18 +2677,82 @@
       <div class="ind-map-body"><img id="indMapImg" alt="思维导图"></div>
     </div>
   </div>
+  <div id="imgViewerModal" class="ind-map-modal" hidden>
+    <div class="ind-map-mask" id="imgViewerMask"></div>
+    <div class="ind-map-box">
+      <div class="ind-map-head"><b id="imgViewerTitle"></b><button type="button" id="imgViewerClose" aria-label="关闭">×</button></div>
+      <div class="ind-map-body"><img id="imgViewerImg" alt=""></div>
+    </div>
+  </div>
   <script>
   (function(){
-    var modal = document.getElementById('indMapModal');
-    var img = document.getElementById('indMapImg');
-    function closeMap(){
+    var modal = document.getElementById('imgViewerModal');
+    var img = document.getElementById('imgViewerImg');
+    function closeV(){
       modal.hidden = true;
       img.src = '';
     }
-    document.getElementById('indMapClose').addEventListener('click', closeMap);
-    document.getElementById('indMapMask').addEventListener('click', closeMap);
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMap(); });
+    document.getElementById('imgViewerClose').addEventListener('click', closeV);
+    document.getElementById('imgViewerMask').addEventListener('click', closeV);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeV(); });
   })();
   </script>
+  <div id="editModal" class="edit-modal" hidden>
+    <div class="edit-mask" id="editMask"></div>
+    <div class="edit-box">
+      <div class="edit-head">
+        <b>数据编辑</b>
+        <span class="edit-hint">修改网站数据 · 保存后本机生效 · 导出后上传 GitHub 在线生效</span>
+        <button type="button" id="editClose" aria-label="关闭">×</button>
+      </div>
+      <div class="edit-kind-row">
+        <button type="button" class="edit-kind active" data-k="city">城市数据</button>
+        <button type="button" class="edit-kind" data-k="sites">常用网站</button>
+        <button type="button" class="edit-kind" data-k="ind">产业观察</button>
+        <button type="button" class="edit-kind" data-k="job">稳就业</button>
+        <span class="edit-kind-sp"></span>
+        <button type="button" id="editSaveBtn" class="edit-act">保存</button>
+        <button type="button" id="editExportBtn" class="edit-act edit-act2">导出 data.json</button>
+      </div>
+      <div class="edit-city-body" id="editCityBody">
+        <div class="edit-city-row">
+          <label>城市</label>
+          <select id="editCitySel"></select>
+        </div>
+        <div class="edit-tabs" id="editTabs"></div>
+        <div class="edit-list" id="editList"></div>
+        <div class="edit-form" id="editForm"></div>
+      </div>
+      <div class="edit-global-body" id="editSitesBody" hidden>
+        <div class="edit-ghead"><label>分类</label><select id="editSiteCat"><option>高考升学</option><option>在线课程</option><option>就业与国企招聘</option></select></div>
+        <div class="edit-list" id="editSiteList"></div>
+        <div class="edit-form">
+          <label class="edit-f"><span>网站名称 *</span><input type="text" id="efSiteName" placeholder="如：XX网"></label>
+          <label class="edit-f"><span>网址 *</span><input type="text" id="efSiteUrl" placeholder="https://..."></label>
+          <div class="edit-form-actions"><button type="button" id="editSiteAdd" class="edit-add-btn">添加网站</button></div>
+        </div>
+      </div>
+      <div class="edit-global-body" id="editIndBody" hidden>
+        <div class="edit-ghead"><label>产业</label><select id="editIndSel"></select><span class="edit-hint" style="font-size:11px;color:#8A98A8;">修改说明、代表企业、对应央企</span></div>
+        <div class="edit-form edit-form-cols1">
+          <label class="edit-f"><span>产业细分（sub）</span><input type="text" id="efIndSub" placeholder="如：煤炭开采 · 焦化 · 煤化工"></label>
+          <label class="edit-f"><span>产业说明（note）</span><textarea id="efIndNote" rows="4" placeholder="该产业的定义与涵盖范围"></textarea></label>
+          <label class="edit-f"><span>代表企业（每行一条：企业·地点）</span><textarea id="efIndFirms" rows="5" placeholder="晋能控股集团·太原·大同"></textarea></label>
+          <label class="edit-f"><span>对应央企（逗号分隔）</span><textarea id="efIndSoe" rows="2" placeholder="中国中煤能源集团,中国煤炭科工集团"></textarea></label>
+          <div class="edit-form-actions"><button type="button" id="editIndSave" class="edit-add-btn">保存产业信息</button><button type="button" id="editIndReset" class="edit-cancel-btn">还原内置</button></div>
+        </div>
+      </div>
+      <div class="edit-global-body" id="editJobBody" hidden>
+        <div class="edit-ghead"><label>就业类型</label><select id="editJobSel"></select><span class="edit-hint" style="font-size:11px;color:#8A98A8;">修改就业路径说明与跳转文档</span></div>
+        <div class="edit-form edit-form-cols1">
+          <label class="edit-f"><span>就业路径说明（每行一条）</span><textarea id="efJobDesc" rows="6" placeholder="每行写一条路径"></textarea></label>
+          <label class="edit-f"><span>跳转文档标题（可留空）</span><input type="text" id="efJobLinkTitle" placeholder="如：2026年山西省公务员考试职位表"></label>
+          <label class="edit-f"><span>跳转文档网址（可留空）</span><input type="text" id="efJobLinkUrl" placeholder="https://..."></label>
+          <div class="edit-form-actions"><button type="button" id="editJobSave" class="edit-add-btn">保存就业信息</button><button type="button" id="editJobReset" class="edit-cancel-btn">还原内置</button></div>
+        </div>
+      </div>
+      <div class="edit-msg" id="editMsg"></div>
+    </div>
+  </div>
 </body>
 </html>
