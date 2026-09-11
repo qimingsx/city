@@ -208,7 +208,9 @@
   .card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff;transition:.15s;}
   .card:hover{border-color:#C3D2E6;box-shadow:0 4px 14px rgba(16,42,67,.06);}
   .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px;}
-  .card-title{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45;}
+  .card-title{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:3px;}
+  .card-title:hover{color:#D0342C;}
+  .card-title .jt{font-size:10px;opacity:.55;font-weight:400;}
   .chip{flex:none;font-size:11px;border-radius:6px;padding:2px 8px;white-space:nowrap;line-height:1.5;font-weight:500;}
   .card-line{font-size:13px;color:#33475C;line-height:1.6;margin:4px 0;}
   .card-line b{color:var(--blue-800);font-weight:600;margin-right:6px;}
@@ -2509,7 +2511,8 @@
         + (hasL ? '<button type="button" class="gtab atab' + (hasW ? '' : ' active') + '" data-t="ls">历史类</button>' : '')
         + '</div><div class="admit-body"></div></div>';
     }
-    return '<div class="card" data-sch="'+esc(e.n)+'"><div class="card-top"><div class="card-title">'+esc(e.n)+'</div>'
+    var jyUrl = e.jy || ('https://www.baidu.com/s?wd=' + encodeURIComponent(e.n + ' 就业信息网'));
+    return '<div class="card" data-sch="'+esc(e.n)+'"><div class="card-top"><a class="card-title" href="'+esc(jyUrl)+'" target="_blank" rel="noopener" title="打开就业信息网">'+esc(e.n)+'<span class="jt">↗</span></a>'
       + chipHTML(mainTag, '#7C3AED') + '</div>'
       + (inds.length ? '<div class="card-tags">'+inds.map(function(i){return '<span class="ind-chip">'+esc(i)+'</span>';}).join('')+'</div>' : '')
       + (tags.length ? '<div class="card-tags">'+tags.map(function(t){return '<span>'+esc(t)+'</span>';}).join('')+'</div>' : '')
