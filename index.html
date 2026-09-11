@@ -586,21 +586,33 @@
   var EDIT_CACHE = {};
   try{ EDIT_CACHE = JSON.parse(localStorage.getItem(EDIT_KEY) || '{}'); }catch(e){ EDIT_CACHE = {}; }
   function editSaveLS(){ try{ localStorage.setItem(EDIT_KEY, JSON.stringify(EDIT_CACHE)); }catch(e){} }
-  /* 在线环境：尝试加载外部 data.json（GitHub 部署后用户自行编辑的数据） */
+  /* 在线环境：每个会话至多应用一次外部 data.json 中的自定义内容（常用网站/产业观察/稳就业/常用文件），
+     仅当确有新增改动时才刷新一次，杜绝死循环刷新导致页面闪烁；file:// 本地打开不执行。 */
   (function(){
     if(location.protocol === 'file:') return;
+    var FLAG='qm_ext_applied_v1';
+    try{ if(sessionStorage.getItem(FLAG)) return; }catch(e){}
+    function done(){ try{ sessionStorage.setItem(FLAG,'1'); }catch(e){} }
+    function put(key, val){
+      if(val === undefined || val === null) return false;
+      var nv = JSON.stringify(val);
+      try{ if(localStorage.getItem(key) === nv) return false; localStorage.setItem(key, nv); return true; }catch(e){ return false; }
+    }
     try{
-      fetch('data.json').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
-        if(!d || !d.cities || !d.stats) return;
-        if(window.APP_DATA && window.APP_DATA._ext) return;
-        if(d._sites){ try{ localStorage.setItem('qm_sites_v1', JSON.stringify(d._sites)); }catch(e){} }
-        if(d._ind){ try{ localStorage.setItem('qm_ind_v1', JSON.stringify(d._ind)); }catch(e){} }
-        if(d._job){ try{ localStorage.setItem('qm_job_v1', JSON.stringify(d._job)); }catch(e){} }
-        if(d._files){ try{ localStorage.setItem('qm_files_custom_v1', JSON.stringify(d._files.custom || [])); localStorage.setItem('qm_files_removed_v1', JSON.stringify(d._files.removed || [])); }catch(e){} }
-        try{ window.APP_DATA = d; }catch(e){}
-        location.reload();
-      }).catch(function(){});
-    }catch(e){}
+      fetch('data.json',{cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+        if(!d || !d.cities || !d.stats){ done(); return; }
+        var changed=false;
+        if(put('qm_sites_v1', d._sites)) changed=true;
+        if(put('qm_ind_v1', d._ind)) changed=true;
+        if(put('qm_job_v1', d._job)) changed=true;
+        if(d._files){
+          if(put('qm_files_custom_v1', d._files.custom || [])) changed=true;
+          if(put('qm_files_removed_v1', d._files.removed || [])) changed=true;
+        }
+        done();
+        if(changed) location.reload();
+      }).catch(function(){ done(); });
+    }catch(e){ done(); }
   })();
   function arrOf(base, key){
     var e = EDIT_CACHE[base];
